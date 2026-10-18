@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aug's Dogs</title>
+  <meta name="description" content="A weekly random dog walk somewhere in Rhode Island. Show up if you can.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='%23e8743b'%3E%3Cellipse cx='32' cy='42' rx='14' ry='12'/%3E%3Cellipse cx='15' cy='26' rx='6' ry='8'/%3E%3Cellipse cx='49' cy='26' rx='6' ry='8'/%3E%3Cellipse cx='24' cy='14' rx='6' ry='8'/%3E%3Cellipse cx='40' cy='14' rx='6' ry='8'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="paw" viewBox="0 0 64 64" aria-hidden="true"><g><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="15" cy="26" rx="6" ry="8"/><ellipse cx="49" cy="26" rx="6" ry="8"/><ellipse cx="24" cy="14" rx="6" ry="8"/><ellipse cx="40" cy="14" rx="6" ry="8"/></g></svg>
+      <h1 id="group-name">Aug's Dogs</h1>
+    </div>
+    <button class="chip me-chip" id="me-button" type="button">Who are you?</button>
+  </header>
+
+  <div id="demo-banner" class="banner" hidden>
+    Demo mode: everything you do here is saved only in this browser. See the README to switch on sharing.
+  </div>
+
+  <main class="layout">
+    <div id="map" class="map" aria-label="Map of dog-friendly walks in Rhode Island"></div>
+
+    <section class="panel">
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="week" aria-selected="true">This week</button>
+        <button role="tab" data-tab="past" aria-selected="false">Past walks</button>
+        <button role="tab" data-tab="spots" aria-selected="false">All spots</button>
+      </nav>
+      <div id="view" class="view"></div>
+      <footer class="fineprint">
+        State parks need dogs on a leash of 6 ft or less, and you pick up after them. Rules change, so check the posted signs.
+        Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+      </footer>
+    </section>
+  </main>
+
+  <dialog id="me-dialog" class="dialog">
+    <form method="dialog" id="me-form">
+      <h2>Who's walking?</h2>
+      <label>Your name <input name="name" required maxlength="40" autocomplete="given-name"></label>
+      <label>Your dog(s) <input name="dog" maxlength="60" placeholder="e.g. Pickle &amp; Bean"></label>
+      <p class="hint">Saved on this device only, so friends know who's coming.</p>
+      <div class="row end">
+        <button value="cancel" formnovalidate class="btn ghost">Cancel</button>
+        <button value="ok" class="btn">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="lightbox" class="dialog lightbox">
+    <button class="lb-close" type="button" aria-label="Close">×</button>
+    <button class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>
+    <img alt="">
+    <button class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>
+    <p class="lb-caption"></p>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="config.js"></script>
+  <script src="data/walks.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

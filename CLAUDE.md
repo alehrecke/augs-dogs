@@ -27,7 +27,8 @@ note → photo upload → lightbox → re-roll → past walks → spot search, a
 ## Current status
 
 - 2026-10-18: v1 built and smoke-tested in demo mode (all flows pass, no console errors).
-  Git repo initialised locally (branch `main`), **no remote yet**.
-- Waiting on Alex: create the Supabase project + paste keys into `config.js`, create the
-  GitHub repo and enable Pages (steps in README). Shared mode has not been run against a
-  real Supabase project yet, so check it the first time it's connected.
+- 2026-10-18: Supabase project `zpaytdpbabllenywbypm` connected (publishable key, which needs
+  supabase-js ≥ 2.6x, hence 2.117.2). Schema run; RLS insert + storage upload verified by
+  REST probes (left a harmless `photos/_setup-test/pixel.jpg`). Meets Sundays 14:00.
+  Pushed to `github.com/alehrecke/augs-dogs` (`main`); site URL once Pages is on:
+  https://alehrecke.github.io/augs-dogs/

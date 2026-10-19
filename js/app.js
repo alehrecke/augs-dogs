@@ -5,7 +5,14 @@
   let WALKS = CURATED.slice();
   let BY_ID = Object.fromEntries(WALKS.map((w) => [w.id, w]));
   const TYPES = ["woods", "coast", "beach", "path", "fields", "city"];
-  const REGIONS = ["North", "Providence", "West Bay", "South County", "Newport & East Bay", "Block Island"];
+  const REGIONS = ["North", "Providence", "West Bay", "South County", "Newport & East Bay", "Block Island", "Connecticut", "Massachusetts"];
+  const OFF_BY_DEFAULT = ["Block Island", "Connecticut", "Massachusetts"];
+  const PROVIDENCE = { lat: 41.824, lon: -71.413, label: "Providence" };
+  const RADII = [15, 30, 45, 60];
+
+  // Spin settings are per-device (each spinner picks their own), remembered between visits.
+  const PREFS_KEY = "augs-dogs-spin-prefs";
+  const PREFS = (() => { try { return JSON.parse(localStorage.getItem(PREFS_KEY)) || {}; } catch { return {}; } })();
 
   const S = {
     store: null,
@@ -14,8 +21,13 @@
     signature: "",
     tab: "week",
     detail: null,        // event id open in the Past walks tab
-    regions: new Set(REGIONS.filter((r) => r !== "Block Island")),
+    regions: new Set(REGIONS.filter((r) => !OFF_BY_DEFAULT.includes(r))),
     favOnly: false, easyOnly: false,   // extra spin filters
+    // "region" = pick by RI region chips; "distance" = anything within radiusMi of center, any state.
+    mode: PREFS.mode === "distance" ? "distance" : "region",
+    center: PREFS.center || PROVIDENCE,
+    radiusMi: RADII.includes(PREFS.radiusMi) ? PREFS.radiusMi : 30,
+    pickingCenter: false,
     showNoDogs: false,                 // purple "no dogs allowed" map layer
     spinning: false, rerolling: false, editing: false,
     adding: false, draft: null, searchHits: [],   // "Add a spot" form state
@@ -34,7 +46,11 @@
   const fmtTime = (t) => { const [h, m] = t.split(":").map(Number); return new Date(2000, 0, 1, h, m).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }); };
   const errMsg = (e) => (e && e.message) || "Something went wrong. Try again?";
   const walkFor = (id) => BY_ID[id] || { id, name: id, town: "", region: "", type: "", blurb: "", flags: [], lat: 41.7, lon: -71.5 };
-  const directionsUrl = (w) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(`${w.name}, ${w.town}, RI`);
+  const stateOf = (w) => w.state || { Connecticut: "CT", Massachusetts: "MA" }[w.region] || "RI";
+  const directionsUrl = (w) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(`${w.name}, ${w.town}, ${stateOf(w)}`);
+  const savePrefs = () => {
+    try { localStorage.setItem(PREFS_KEY, JSON.stringify({ mode: S.mode, center: S.center, radiusMi: S.radiusMi })); } catch { /* private mode */ }
+  };
   const pageUrl = () => location.href.split("#")[0];
   const dogsOK = (w) => w.dogs !== "no";
   const infoUrl = (w) => (w.eri ? `https://exploreri.org/gSiteReport2.php?siteID=${w.eri}` : null);
@@ -100,13 +116,17 @@
     if (f.has("orange") && (md >= 901 || md <= 531)) {
       notes.push("Hunting season: RI requires blaze orange here (200 sq in, 500 in December shotgun season). Put an orange vest on the pup too.");
     }
+    if (f.has("huntingArea") && (md >= 901 || md <= 531)) {
+      notes.push("Hunting is allowed here: wear blaze orange in season, and put an orange vest on the pup.");
+    }
     if (f.has("island")) notes.push("Needs the Block Island ferry from Point Judith. Plan a full day.");
     return { ok, notes };
   }
 
   // Walks you haven't done yet go first; once every eligible walk is done, anything but the last 5.
   function candidates(dateStr, excludeId) {
-    const eligible = WALKS.filter((w) => dogsOK(w) && S.regions.has(w.region) && w.id !== excludeId
+    const inScope = S.mode === "distance" ? (w) => distMi(S.center, w) <= S.radiusMi : (w) => S.regions.has(w.region);
+    const eligible = WALKS.filter((w) => dogsOK(w) && inScope(w) && w.id !== excludeId
       && (!S.favOnly || w.fav) && (!S.easyOnly || w.difficulty === "easy") && seasonCheck(w, dateStr).ok);
     const visited = new Set(S.events.filter((e) => e.meet_date !== dateStr).map((e) => e.walk_id));
     const fresh = eligible.filter((w) => !visited.has(w.id));
@@ -175,7 +195,10 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
     WALKS.forEach(addMarker);
-    map.on("click", (e) => { if (S.adding) setDraft(e.latlng.lat, e.latlng.lng); });
+    map.on("click", (e) => {
+      if (S.adding) setDraft(e.latlng.lat, e.latlng.lng);
+      else if (S.pickingCenter) setCenter({ lat: e.latlng.lat, lon: e.latlng.lng, label: "the map pin" });
+    });
 
     // Map button that shows/hides the "no dogs allowed" layer.
     const NoDogsToggle = L.Control.extend({
@@ -196,6 +219,35 @@
     new NoDogsToggle({ position: "topright" }).addTo(map);
   }
 
+  // ---------- distance mode ----------
+  let radiusCircle = null;
+  // The circle shows while the spin card is up in distance mode.
+  function updateRadiusCircle() {
+    const show = S.mode === "distance" && S.tab === "week" && (!currentEvent() || S.rerolling);
+    if (!show) { if (radiusCircle) { radiusCircle.remove(); radiusCircle = null; } return; }
+    const opts = { radius: S.radiusMi * 1609, color: "#e8743b", weight: 2, fillOpacity: 0.06, interactive: false };
+    if (radiusCircle) radiusCircle.setLatLng([S.center.lat, S.center.lon]).setRadius(opts.radius);
+    else radiusCircle = L.circle([S.center.lat, S.center.lon], opts).addTo(map);
+  }
+
+  function setCenter(c) {
+    S.center = { lat: +c.lat.toFixed(4), lon: +c.lon.toFixed(4), label: c.label };
+    S.pickingCenter = false;
+    savePrefs();
+    render();
+    map.flyToBounds(radiusCircle ? radiusCircle.getBounds() : [[c.lat, c.lon], [c.lat, c.lon]], { duration: 0.6 });
+  }
+
+  function centerOnMe() {
+    if (!navigator.geolocation) return toast("This browser can't share your location.");
+    toast("Finding you…", 8000);
+    navigator.geolocation.getCurrentPosition(
+      (p) => { toast("Got it!"); setCenter({ lat: p.coords.latitude, lon: p.coords.longitude, label: "your location" }); },
+      () => toast("Couldn't get your location. Tap the map instead.", 3500),
+      { timeout: 8000, maximumAge: 600000 },
+    );
+  }
+
   // ---------- friend-added spots ----------
   const spotToWalk = (s) => ({
     id: s.id, name: s.name, town: s.town || "", region: s.region, type: s.type || "walk",
@@ -211,15 +263,22 @@
     custom.forEach((w) => { if (!markers[w.id]) addMarker(w); });
   }
 
-  const inRI = (lat, lon) => lat > 41.1 && lat < 42.05 && lon > -71.95 && lon < -71.1;
-  // Rough km distance; fine at RI scale.
+  // RI plus the nearby parts of CT and MA (matches supabase/003_spots_area.sql).
+  const inArea = (lat, lon) => lat > 40.9 && lat < 42.5 && lon > -72.5 && lon < -70.7;
+  const OK_STATES = ["Rhode Island", "Connecticut", "Massachusetts"];
+  // Rough straight-line distance; fine at this scale.
   const distKm = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lon - b.lon) * 111 * 0.746);
+  const distMi = (a, b) => distKm(a, b) / 1.609;
 
-  // Region = whichever built-in walk is nearest (Block Island is anything that far south).
-  function guessRegion(lat, lon) {
+  // CT/MA come from the geocoded state; inside RI, region = whichever built-in RI walk is nearest.
+  function guessRegion(lat, lon, state) {
+    if (state === "Connecticut" || state === "Massachusetts") return state;
     if (lat < 41.25) return "Block Island";
-    let best = CURATED[0];
-    for (const w of CURATED) if (w.region !== "Block Island" && distKm(w, { lat, lon }) < distKm(best, { lat, lon })) best = w;
+    let best = null;
+    for (const w of CURATED) {
+      if (stateOf(w) !== "RI" || w.region === "Block Island") continue;
+      if (!best || distKm(w, { lat, lon }) < distKm(best, { lat, lon })) best = w;
+    }
     return best.region;
   }
 
@@ -228,16 +287,17 @@
     (await fetch(`https://nominatim.openstreetmap.org/${path}?` + new URLSearchParams({ format: "json", addressdetails: "1", ...params }))).json();
 
   let draftMarker = null;
-  // inRI() is a bounding box, so it also takes slivers of CT/MA. Nominatim's address knows the state.
-  function warnIfNotRI(state) {
-    if (state && state !== "Rhode Island") {
+  // inArea() is a bounding box, so it also takes slivers of NY/NH. Nominatim's address knows the state.
+  function noteState(state) {
+    if (S.draft) S.draft.state = state || null;
+    if (state && !OK_STATES.includes(state)) {
       $("#place-status").textContent += ` ⚠️ That looks like it's in ${state}. Is the pin in the right place?`;
     }
   }
 
   function setDraft(lat, lon, town, state) {
-    if (!inRI(lat, lon)) return toast("That's outside Rhode Island!");
-    S.draft = { lat, lon };
+    if (!inArea(lat, lon)) return toast("That's too far away. Keep it to RI and the nearby parts of CT and MA.", 3500);
+    S.draft = { lat, lon, state: null };
     if (draftMarker) draftMarker.setLatLng([lat, lon]);
     else {
       draftMarker = L.marker([lat, lon], { icon: pinIcon("draft"), draggable: true, zIndexOffset: 2000 }).addTo(map);
@@ -248,13 +308,13 @@
     $("#place-status").textContent = `📍 Pin dropped${town ? ` in ${town}` : ""}. Drag it on the map to fine-tune.`;
     if (town) {
       if (!form.elements.town.value) form.elements.town.value = town;
-      return warnIfNotRI(state);
+      return noteState(state);
     }
     nominatim("reverse", { lat, lon, zoom: 14 })
       .then((r) => {
         const t = townFrom(r.address);
         if (t && !form.elements.town.value) form.elements.town.value = t;
-        warnIfNotRI(r.address && r.address.state);
+        noteState(r.address && r.address.state);
       })
       .catch(() => {});
   }
@@ -270,10 +330,10 @@
     if (!q) return;
     box.innerHTML = `<p class="hint">Searching…</p>`;
     try {
-      S.searchHits = await nominatim("search", { q, limit: 5, countrycodes: "us", viewbox: "-71.95,42.05,-71.1,41.1", bounded: 1 });
+      S.searchHits = await nominatim("search", { q, limit: 5, countrycodes: "us", viewbox: "-72.5,42.5,-70.7,40.9", bounded: 1 });
       box.innerHTML = S.searchHits.length
         ? S.searchHits.map((h, i) => `<button type="button" class="list-item hit" data-action="pick-hit" data-i="${i}">${esc(h.display_name)}</button>`).join("")
-        : `<p class="hint">Nothing found in RI. Try a different name, or tap the map.</p>`;
+        : `<p class="hint">Nothing found nearby. Try a different name, or tap the map.</p>`;
     } catch {
       box.innerHTML = `<p class="hint">Search isn't working right now. Tap the map instead.</p>`;
     }
@@ -297,7 +357,7 @@
       id: "u-" + (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)),
       name,
       town: form.elements.town.value.trim() || null,
-      region: guessRegion(S.draft.lat, S.draft.lon),
+      region: guessRegion(S.draft.lat, S.draft.lon, S.draft.state),
       type: form.elements.type.value,
       blurb: form.elements.blurb.value.trim() || null,
       lat: +S.draft.lat.toFixed(5),
@@ -308,7 +368,11 @@
     const btn = form.querySelector("button[type=submit]");
     btn.disabled = true;
     try { await S.store.addSpot(spot); }
-    catch (e) { btn.disabled = false; return toast(errMsg(e), 4000); }
+    catch (e) {
+      btn.disabled = false;
+      // 23514 = check constraint: the database still only accepts RI coordinates (supabase/003_spots_area.sql not run).
+      return toast(e && e.code === "23514" ? "The shared database doesn't take out-of-state spots yet. Ask Alex to run the update!" : errMsg(e), 4500);
+    }
     S.adding = false;
     clearDraft();
     toast("Added! It's in the hat for future spins 🎲", 3500);
@@ -404,6 +468,7 @@
     else if (S.tab === "past") view.innerHTML = S.detail ? pastDetailHtml(S.detail) : pastListHtml();
     else { view.innerHTML = spotsHtml(); renderSpotList(); }
     updatePins();
+    updateRadiusCircle();
   }
 
   function weekHtml() {
@@ -454,7 +519,17 @@
       <p class="eyebrow">${ev ? "Re-roll" : "Next walk"}</p>
       <p class="when">${esc(fmtDate(date))} · ${esc(fmtTime(ev ? ev.meet_time || cfg.meetTime : cfg.meetTime))}</p>
       <p>${ev ? `Currently <strong>${esc(walkFor(ev.walk_id).name)}</strong>. Spin again for somewhere else.` : "No spot picked yet. Spin to choose this week's walk!"}</p>
-      <div class="row filters">${REGIONS.map((r) => `<button class="chip" data-action="region" data-region="${esc(r)}" aria-pressed="${S.regions.has(r)}">${esc(r)}</button>`).join("")}</div>
+      <div class="row filters mode-switch" role="group" aria-label="How to pick">
+        <button class="chip" data-action="set-mode" data-mode="region" aria-pressed="${S.mode === "region"}">By region</button>
+        <button class="chip" data-action="set-mode" data-mode="distance" aria-pressed="${S.mode === "distance"}">By distance (any state)</button>
+      </div>
+      ${S.mode === "region"
+        ? `<div class="row filters">${REGIONS.map((r) => `<button class="chip" data-action="region" data-region="${esc(r)}" aria-pressed="${S.regions.has(r)}">${esc(r)}</button>`).join("")}</div>`
+        : `<div class="row filters">${RADII.map((r) => `<button class="chip" data-action="set-radius" data-radius="${r}" aria-pressed="${S.radiusMi === r}">${r} mi</button>`).join("")}</div>
+           <p class="hint" style="margin:4px 0">from <strong>${esc(S.center.label)}</strong> (straight-line) ·
+             <button class="linkish" data-action="center-providence">Providence</button> ·
+             <button class="linkish" data-action="center-me">my location</button> ·
+             <button class="linkish" data-action="center-pick">${S.pickingCenter ? "now tap the map…" : "tap the map"}</button></p>`}
       <div class="row filters">
         <button class="chip" data-action="toggle-filter" data-filter="favOnly" aria-pressed="${S.favOnly}">★ Favourites only</button>
         <button class="chip" data-action="toggle-filter" data-filter="easyOnly" aria-pressed="${S.easyOnly}">Easy walks only</button>
@@ -815,6 +890,18 @@
     else if (a === "back") { S.detail = null; render(); }
     else if (a === "photo") openLightbox(el.dataset.id);
     else if (a === "toggle-filter") { S[el.dataset.filter] = !S[el.dataset.filter]; render(); }
+    else if (a === "set-mode") {
+      S.mode = el.dataset.mode; S.pickingCenter = false; savePrefs(); render();
+      if (S.mode === "distance" && radiusCircle) map.flyToBounds(radiusCircle.getBounds(), { duration: 0.6 });
+    }
+    else if (a === "set-radius") { S.radiusMi = +el.dataset.radius; savePrefs(); render(); map.flyToBounds(radiusCircle.getBounds(), { duration: 0.6 }); }
+    else if (a === "center-providence") setCenter(PROVIDENCE);
+    else if (a === "center-me") centerOnMe();
+    else if (a === "center-pick") {
+      S.pickingCenter = true; render();
+      if (window.innerWidth < 860) $("#map").scrollIntoView({ behavior: "smooth", block: "start" });
+      toast("Tap the map where you want to start from", 3500);
+    }
     else if (a === "add-spot") startAdding();
     else if (a === "add-cancel") { S.adding = false; clearDraft(); render(); }
     else if (a === "search-place") searchPlace();

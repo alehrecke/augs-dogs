@@ -16,8 +16,8 @@ SRC = ROOT / "tools" / "walks-source.json"
 OUT = ROOT / "data" / "walks.js"
 UA = "augs-dogs/0.1 (personal friends' walk planner)"
 
-# Rough Rhode Island bounding box, to reject geocodes that land out of state.
-RI = {"lat": (41.05, 42.05), "lon": (-71.95, -71.10)}
+# Rough box around RI plus the nearby parts of CT and MA, to reject geocodes that land somewhere silly.
+AREA = {"lat": (40.9, 42.5), "lon": (-72.5, -70.7)}
 
 
 def geocode(q):
@@ -31,7 +31,7 @@ def geocode(q):
     if not hits:
         return None
     lat, lon = float(hits[0]["lat"]), float(hits[0]["lon"])
-    if not (RI["lat"][0] < lat < RI["lat"][1] and RI["lon"][0] < lon < RI["lon"][1]):
+    if not (AREA["lat"][0] < lat < AREA["lat"][1] and AREA["lon"][0] < lon < AREA["lon"][1]):
         return None
     return round(lat, 5), round(lon, 5)
 

@@ -24,6 +24,15 @@ How the 139 places in `tools/walks-source.json` were chosen, and what's known ab
 - **💧 Dog can wade:** pond, river, brook or shoreline access along the trail.
 - **No-dogs layer (20):** beautiful places where dogs are banned. They show only when the purple map toggle is on and never go into the spin.
 
+## Connecticut & Massachusetts (added 2026-10-19)
+
+21 dog walks within ~47 straight-line miles of Providence, plus Caratunk (Audubon RI, Seekonk) and
+Allens Pond (Mass Audubon) in the no-dogs layer.
+- **CT state parks and forests:** dogs on a leash of 7 ft or less. No dogs in buildings or swimming areas, and none on the beaches at Harkness, Rocky Neck or Silver Sands year-round ([CT DEEP policies](https://portal.ct.gov/DEEP/State-Parks/Policies---CT-State-Parks-and-Forests)). No hunting on Sundays in CT.
+- **MA DCR parks:** leashed dogs allowed except at listed places (Walden, Moore SP, Boston Harbor Islands; [Dogs in DCR parks](https://www.mass.gov/guides/dogs-in-dcr-parks)). Purgatory Chasm and Freetown SF confirm dogs on their own pages.
+- **Mass Audubon:** "dog walking ... prohibited" at its sanctuaries ([Allens Pond](https://www.massaudubon.org/places-to-explore/wildlife-sanctuaries/allens-pond)).
+- **Bluff Point:** sources disagree on dogs on the beach Apr–Sep, so the app tip says to stick to the trails in summer.
+
 ## Rules worth knowing
 
 - State parks: leash ≤ 6 ft. State management areas: leash ≤ 25 ft, and no loose dogs Mar 15 – Aug 15 ([RI regs](https://rules.sos.ri.gov/regulations/Part/250-100-00-9)).

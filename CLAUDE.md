@@ -22,6 +22,9 @@ software person: explain choices in plain language and keep the stack boring.
   siteID → "Trail map" link), `dogs: "no"` + `noDogs {why, enforcement}` = purple layer, filtered out of
   `candidates()` by `dogsOK()`. Research + sources in `docs/RESEARCH.md`; re-scrape with
   `tools/scrape_exploreri.py`. Reddit is unreachable from Claude's tools (403).
+- Distance mode: `S.mode` region|distance, `S.center`/`S.radiusMi` saved per device in localStorage
+  (`augs-dogs-spin-prefs`). Out-of-state walks carry `state` (CT/MA) + region "Connecticut"/"Massachusetts";
+  use `stateOf(w)`. `huntingArea` flag = generic (non-RI) blaze-orange note.
 - Seasonal dog rules live in `seasonCheck()` in `js/app.js`, keyed off each walk's `flags`
   (`stateBeach`, `beachOnly`, `townBeachNarr`, `napatree`, `orange`, `island`, `offSeasonOnly`, `noDogsNesting`).
 
@@ -45,3 +48,6 @@ note → photo upload → lightbox → re-roll → past walks → spot search, a
   verified via REST, live site opens the form with no errors.
 - 2026-10-19: v2 walk list: 119 dog walks (28 ★), 20 no-dog places (purple toggle layer). Spin filters
   ★ Favourites / Easy only. Tested in demo mode (filters, 12 spins never pick no-dog, phone layout).
+- 2026-10-19: distance mode (15/30/45/60 mi from Providence / my location / tapped point) + 21 CT/MA
+  walks + 2 MA no-dog places. Friend spots allowed in CT/MA once `supabase/003_spots_area.sql` is run
+  (until then the insert fails with 23514 and the app explains).

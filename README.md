@@ -3,6 +3,7 @@
 A tiny website for a friends' weekly dog walk somewhere in Rhode Island.
 
 - **Map** of 119 dog-friendly walks around RI with length, difficulty, ★ community favourites, 💧 swim spots, parking tips and trail-map links. Built from Explore RI, dog-hiking guides and official rules (see [docs/RESEARCH.md](docs/RESEARCH.md)).
+- **By distance** spin mode: anything within 15–60 miles of Providence, your location, or a tapped point, across RI, Connecticut and Massachusetts (21 hand-picked CT/MA walks; CT and MA chips also appear in region mode).
 - **No-dogs layer** (purple, map toggle): 20 beautiful places where dogs are banned, with why and how it's enforced. Never in the spin.
 - **Spin the wheel** to pick each week's walk at random. It skips places you've already been until you've done them all, and skips beaches during their summer dog bans. Region chips plus **★ Favourites only** / **Easy walks only** narrow the draw (Block Island is off by default because it needs a ferry).
 - **"I'm in!"** RSVPs, an editable meeting spot/time, **Add to calendar**, and a **Share invite** text for the group chat.
@@ -38,7 +39,7 @@ then open <http://localhost:8000>. (Opening `index.html` by double-clicking most
 ### 1. Create the shared database (Supabase)
 
 1. Sign up at <https://supabase.com> (GitHub login is easiest) → **New project**. Name it `augs-dogs`, pick a region near you (East US), and set any database password (you won't need it again).
-2. When it's ready, open **SQL Editor** → **New query**, paste the whole of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. That creates the tables and the `photos` bucket. Then do the same with [`supabase/002_spots.sql`](supabase/002_spots.sql) (friend-added spots).
+2. When it's ready, open **SQL Editor** → **New query**, paste the whole of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. That creates the tables and the `photos` bucket. Then do the same with [`supabase/002_spots.sql`](supabase/002_spots.sql) (friend-added spots) and [`supabase/003_spots_area.sql`](supabase/003_spots_area.sql) (lets those spots be in nearby CT/MA).
 3. Go to **Project Settings → API Keys** and copy the **Project URL** and the **anon public** key into [`config.js`](config.js). (Newer Supabase projects show a "publishable" key first. If that one gives errors, use the anon key under the **Legacy API keys** tab.)
 
    ```js

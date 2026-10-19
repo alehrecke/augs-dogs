@@ -6,6 +6,7 @@ A tiny website for a friends' weekly dog walk somewhere in Rhode Island.
 - **Spin the wheel** to pick each week's walk at random. It skips places you've already been until you've done them all, and skips beaches during their summer dog bans. Region chips narrow the draw (Block Island is off by default because it needs a ferry).
 - **"I'm in!"** RSVPs, an editable meeting spot/time, **Add to calendar**, and a **Share invite** text for the group chat.
 - **Past walks** turn green on the map, and each one keeps a shared photo album anyone can add to.
+- **Add a spot**: anyone can add a dog-friendly place they know (search for it or tap the map). It shows on the map for everyone and goes into the hat for future spins.
 - Automatic seasonal warnings, e.g. blaze-orange reminders in hunting season.
 
 There are no logins. People type their name and dog's name once and it's remembered on their phone.
@@ -36,7 +37,7 @@ then open <http://localhost:8000>. (Opening `index.html` by double-clicking most
 ### 1. Create the shared database (Supabase)
 
 1. Sign up at <https://supabase.com> (GitHub login is easiest) → **New project**. Name it `augs-dogs`, pick a region near you (East US), and set any database password (you won't need it again).
-2. When it's ready, open **SQL Editor** → **New query**, paste the whole of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. That creates the tables and the `photos` bucket.
+2. When it's ready, open **SQL Editor** → **New query**, paste the whole of [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. That creates the tables and the `photos` bucket. Then do the same with [`supabase/002_spots.sql`](supabase/002_spots.sql) (friend-added spots).
 3. Go to **Project Settings → API Keys** and copy the **Project URL** and the **anon public** key into [`config.js`](config.js). (Newer Supabase projects show a "publishable" key first. If that one gives errors, use the anon key under the **Legacy API keys** tab.)
 
    ```js
@@ -68,7 +69,8 @@ Every later change is just `git commit` + `git push`, and the site updates itsel
 ## Day-to-day
 
 - **Change the meet day/time:** `meetDay` / `meetTime` in `config.js`. A single week can also be changed in the app ("Edit time / meeting spot").
-- **Add or fix a walk:** edit `tools/walks-source.json`, then run `python tools/build_walks.py`. That looks up map coordinates automatically and regenerates `data/walks.js`. If a place can't be found, add `"lat"`/`"lon"` by hand (right-click in Google Maps → copy coordinates).
+- **Remove a friend-added spot:** whoever added it can remove it from its map popup (until it's been walked), or delete the row in Supabase → **Table Editor → spots**.
+- **Add or fix a built-in walk:** edit `tools/walks-source.json`, then run `python tools/build_walks.py`. That looks up map coordinates automatically and regenerates `data/walks.js`. If a place can't be found, add `"lat"`/`"lon"` by hand (right-click in Google Maps → copy coordinates).
 - **Delete a photo or a bad event:** Supabase dashboard → **Table Editor** (and **Storage → photos** for the file itself).
 
 ## Things to know
@@ -80,7 +82,7 @@ Every later change is just `git commit` + `git push`, and the site updates itsel
 
 ## Ideas for later
 
-- Friends suggest new walks from the app, then vote.
+- Vote on spots / mark favourites.
 - Weekly reminder text or email (Supabase scheduled function, or a simple group-chat bot).
 - "Paw-ssport": stats per dog (walks attended, miles, favourite spot).
 - Weather forecast for walk day on the card.

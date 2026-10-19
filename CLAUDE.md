@@ -12,7 +12,11 @@ software person: explain choices in plain language and keep the stack boring.
   and `SupabaseStore` (shared mode). Any new data feature must be added to **both**.
 - `supabase/schema.sql`: tables `events` (unique `meet_date` prevents double spins),
   `rsvps`, `photos` + public `photos` storage bucket. No auth: open RLS policies for anon.
-- Walk data: edit `tools/walks-source.json`, run `python tools/build_walks.py` (Nominatim
+- Friend-added spots: `spots` table (`supabase/002_spots.sql`), merged into `WALKS` by
+  `setSpots()`; ids are `u-<uuid>`. Place search/reverse geocoding uses Nominatim from the
+  browser. Region is inferred from the nearest built-in walk. Loaded separately in `refresh()`
+  so the site still works if the table is missing (`S.spotsReady`).
+- Built-in walk data: edit `tools/walks-source.json`, run `python tools/build_walks.py` (Nominatim
   geocoding) → generates `data/walks.js`. Never hand-edit `data/walks.js`.
 - Seasonal dog rules live in `seasonCheck()` in `js/app.js`, keyed off each walk's `flags`
   (`stateBeach`, `beachOnly`, `townBeachNarr`, `napatree`, `orange`, `island`).
@@ -31,4 +35,7 @@ note → photo upload → lightbox → re-roll → past walks → spot search, a
   supabase-js ≥ 2.6x, hence 2.117.2). Schema run; RLS insert + storage upload verified by
   REST probes (left a harmless `photos/_setup-test/pixel.jpg`). Meets Sundays 14:00.
   Pushed to `github.com/alehrecke/augs-dogs` (`main`); site URL once Pages is on:
-  https://alehrecke.github.io/augs-dogs/
+  https://alehrecke.github.io/augs-dogs/ (live 2026-10-18).
+- 2026-10-19: "Add a spot" feature (search or tap map, CT/MA warning, remove own unwalked spot).
+  Tested in demo mode + graceful-degrade in shared mode. **Waiting on Alex to run
+  `supabase/002_spots.sql`**; until then the button shows "needs a database update".

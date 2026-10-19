@@ -19,9 +19,9 @@
 
   function LocalStore() {
     const KEY = "augs-dogs-demo-v1";
-    const empty = () => ({ events: [], rsvps: [], photos: [] });
+    const empty = () => ({ events: [], rsvps: [], photos: [], spots: [] });
     const load = () => {
-      try { return JSON.parse(localStorage.getItem(KEY)) || empty(); } catch { return empty(); }
+      try { return { ...empty(), ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return empty(); }
     };
     const save = (d) => {
       try { localStorage.setItem(KEY, JSON.stringify(d)); }
@@ -61,6 +61,16 @@
         d.photos.push(row); save(d); return row;
       },
       photoUrl(p) { return p.url; },
+      async listSpots() { return load().spots; },
+      async addSpot(spot) {
+        const d = load();
+        const row = { created_at: now(), ...spot };
+        d.spots.push(row); save(d); return row;
+      },
+      async removeSpot(id) {
+        const d = load();
+        d.spots = d.spots.filter((s) => s.id !== id); save(d);
+      },
     };
   }
 
@@ -93,6 +103,9 @@
         }).select().single());
       },
       photoUrl(p) { return client.storage.from(cfg.photoBucket).getPublicUrl(p.path).data.publicUrl; },
+      async listSpots() { return check(await T("spots").select("*").order("created_at")); },
+      async addSpot(spot) { return check(await T("spots").insert(spot).select().single()); },
+      async removeSpot(id) { check(await T("spots").delete().eq("id", id)); },
     };
   }
 

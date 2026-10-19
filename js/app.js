@@ -1,17 +1,22 @@
 (function () {
   const cfg = window.AUGS_CONFIG;
-  const WALKS = window.WALKS;
-  const BY_ID = Object.fromEntries(WALKS.map((w) => [w.id, w]));
+  const CURATED = window.WALKS;
+  // Built-in walks plus spots friends added (see setSpots).
+  let WALKS = CURATED.slice();
+  let BY_ID = Object.fromEntries(WALKS.map((w) => [w.id, w]));
+  const TYPES = ["woods", "coast", "beach", "path", "fields", "city"];
   const REGIONS = ["North", "Providence", "West Bay", "South County", "Newport & East Bay", "Block Island"];
 
   const S = {
     store: null,
-    events: [], rsvps: [], photos: [],
+    events: [], rsvps: [], photos: [], spots: [],
+    spotsReady: true,    // false until the spots table exists (supabase/002_spots.sql)
     signature: "",
     tab: "week",
     detail: null,        // event id open in the Past walks tab
     regions: new Set(REGIONS.filter((r) => r !== "Block Island")),
     spinning: false, rerolling: false, editing: false,
+    adding: false, draft: null, searchHits: [],   // "Add a spot" form state
     query: "",
   };
 
@@ -71,6 +76,10 @@
     if (f.has("townBeachNarr")) {
       if (md >= 515 && md <= 915) ok = false;
       else notes.push("Leashed dogs are OK on the town beach Sep 16 – May 14.");
+    }
+    if (f.has("offSeasonOnly")) {
+      if (md >= 401 && md <= 930) ok = false;
+      else notes.push("Dogs are only allowed here in the off-season (Oct – Mar).");
     }
     if (f.has("napatree")) {
       if (md >= 502 && md <= 907) ok = false;
@@ -134,7 +143,16 @@
   // ---------- map ----------
   let map;
   const markers = {};
-  const pinIcon = (cls) => L.divIcon({ className: "", html: `<div class="pin ${cls}"></div>`, iconSize: cls === "next" ? [26, 26] : [16, 16] });
+  const PIN_SIZE = { next: 26, draft: 24 };
+  const pinIcon = (cls) => {
+    const s = PIN_SIZE[cls] || 16;
+    return L.divIcon({ className: "", html: `<div class="pin ${cls}"></div>`, iconSize: [s, s] });
+  };
+  const addMarker = (w) => {
+    markers[w.id] = L.marker([w.lat, w.lon], { icon: pinIcon(""), title: w.name, riseOnHover: true })
+      .addTo(map)
+      .bindPopup(() => popupHtml(w), { maxWidth: 270 });
+  };
 
   function initMap() {
     // Mainland RI; Block Island is just off the bottom edge.
@@ -143,11 +161,142 @@
       maxZoom: 18,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
-    for (const w of WALKS) {
-      markers[w.id] = L.marker([w.lat, w.lon], { icon: pinIcon(""), title: w.name, riseOnHover: true })
-        .addTo(map)
-        .bindPopup(() => popupHtml(w), { maxWidth: 270 });
+    WALKS.forEach(addMarker);
+    map.on("click", (e) => { if (S.adding) setDraft(e.latlng.lat, e.latlng.lng); });
+  }
+
+  // ---------- friend-added spots ----------
+  const spotToWalk = (s) => ({
+    id: s.id, name: s.name, town: s.town || "", region: s.region, type: s.type || "walk",
+    blurb: s.blurb || "", lat: s.lat, lon: s.lon,
+    flags: s.off_season_only ? ["offSeasonOnly"] : [], addedBy: s.added_by,
+  });
+
+  function setSpots(spots) {
+    const custom = spots.map(spotToWalk);
+    WALKS = CURATED.concat(custom);
+    BY_ID = Object.fromEntries(WALKS.map((w) => [w.id, w]));
+    for (const id of Object.keys(markers)) if (!BY_ID[id]) { markers[id].remove(); delete markers[id]; }
+    custom.forEach((w) => { if (!markers[w.id]) addMarker(w); });
+  }
+
+  const inRI = (lat, lon) => lat > 41.1 && lat < 42.05 && lon > -71.95 && lon < -71.1;
+  // Rough km distance; fine at RI scale.
+  const distKm = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lon - b.lon) * 111 * 0.746);
+
+  // Region = whichever built-in walk is nearest (Block Island is anything that far south).
+  function guessRegion(lat, lon) {
+    if (lat < 41.25) return "Block Island";
+    let best = CURATED[0];
+    for (const w of CURATED) if (w.region !== "Block Island" && distKm(w, { lat, lon }) < distKm(best, { lat, lon })) best = w;
+    return best.region;
+  }
+
+  const townFrom = (a = {}) => a.town || a.city || a.village || a.hamlet || a.suburb || "";
+  const nominatim = async (path, params) =>
+    (await fetch(`https://nominatim.openstreetmap.org/${path}?` + new URLSearchParams({ format: "json", addressdetails: "1", ...params }))).json();
+
+  let draftMarker = null;
+  // inRI() is a bounding box, so it also takes slivers of CT/MA. Nominatim's address knows the state.
+  function warnIfNotRI(state) {
+    if (state && state !== "Rhode Island") {
+      $("#place-status").textContent += ` ⚠️ That looks like it's in ${state}. Is the pin in the right place?`;
     }
+  }
+
+  function setDraft(lat, lon, town, state) {
+    if (!inRI(lat, lon)) return toast("That's outside Rhode Island!");
+    S.draft = { lat, lon };
+    if (draftMarker) draftMarker.setLatLng([lat, lon]);
+    else {
+      draftMarker = L.marker([lat, lon], { icon: pinIcon("draft"), draggable: true, zIndexOffset: 2000 }).addTo(map);
+      draftMarker.on("dragend", () => { const p = draftMarker.getLatLng(); setDraft(p.lat, p.lng); });
+    }
+    const form = $("#spot-form");
+    if (!form) return;
+    $("#place-status").textContent = `📍 Pin dropped${town ? ` in ${town}` : ""}. Drag it on the map to fine-tune.`;
+    if (town) {
+      if (!form.elements.town.value) form.elements.town.value = town;
+      return warnIfNotRI(state);
+    }
+    nominatim("reverse", { lat, lon, zoom: 14 })
+      .then((r) => {
+        const t = townFrom(r.address);
+        if (t && !form.elements.town.value) form.elements.town.value = t;
+        warnIfNotRI(r.address && r.address.state);
+      })
+      .catch(() => {});
+  }
+  function clearDraft() {
+    if (draftMarker) draftMarker.remove();
+    draftMarker = null;
+    S.draft = null;
+  }
+
+  async function searchPlace() {
+    const q = $("#place-q").value.trim();
+    const box = $("#place-hits");
+    if (!q) return;
+    box.innerHTML = `<p class="hint">Searching…</p>`;
+    try {
+      S.searchHits = await nominatim("search", { q, limit: 5, countrycodes: "us", viewbox: "-71.95,42.05,-71.1,41.1", bounded: 1 });
+      box.innerHTML = S.searchHits.length
+        ? S.searchHits.map((h, i) => `<button type="button" class="list-item hit" data-action="pick-hit" data-i="${i}">${esc(h.display_name)}</button>`).join("")
+        : `<p class="hint">Nothing found in RI. Try a different name, or tap the map.</p>`;
+    } catch {
+      box.innerHTML = `<p class="hint">Search isn't working right now. Tap the map instead.</p>`;
+    }
+  }
+  function pickHit(i) {
+    const h = S.searchHits[i];
+    if (!h) return;
+    $("#place-hits").innerHTML = "";
+    setDraft(+h.lat, +h.lon, townFrom(h.address), h.address && h.address.state);
+    map.flyTo([+h.lat, +h.lon], 14, { duration: 0.8 });
+  }
+
+  async function saveSpot(form) {
+    const name = form.elements.name.value.trim();
+    if (!S.draft) return toast("Where is it? Search for it, or tap the map to drop a pin.", 3500);
+    const twin = WALKS.find((w) => distKm(w, S.draft) < 0.4 || w.name.toLowerCase() === name.toLowerCase());
+    if (twin && !confirm(`${twin.name} is already on the map close by. Add this anyway?`)) return;
+    const me = await requireMe();
+    if (!me) return;
+    const spot = {
+      id: "u-" + (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)),
+      name,
+      town: form.elements.town.value.trim() || null,
+      region: guessRegion(S.draft.lat, S.draft.lon),
+      type: form.elements.type.value,
+      blurb: form.elements.blurb.value.trim() || null,
+      lat: +S.draft.lat.toFixed(5),
+      lon: +S.draft.lon.toFixed(5),
+      off_season_only: form.elements.offseason.checked,
+      added_by: me.name,
+    };
+    const btn = form.querySelector("button[type=submit]");
+    btn.disabled = true;
+    try { await S.store.addSpot(spot); }
+    catch (e) { btn.disabled = false; return toast(errMsg(e), 4000); }
+    S.adding = false;
+    clearDraft();
+    toast("Added! It's in the hat for future spins 🎲", 3500);
+    await refresh(true);
+    focusWalk(spot.id);
+  }
+
+  async function removeSpot(id) {
+    if (!confirm("Remove this spot from the map for everyone?")) return;
+    try { await S.store.removeSpot(id); } catch (e) { toast(errMsg(e)); }
+    map.closePopup();
+    await refresh(true);
+  }
+
+  function startAdding() {
+    if (!S.spotsReady) return toast("Adding spots needs a quick database update first. Ask Alex!", 4000);
+    S.tab = "spots"; S.detail = null; S.adding = true;
+    render();
+    $(".panel").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function updatePins() {
@@ -166,7 +315,8 @@
     return `<div class="popup">
       <h3>${esc(w.name)}</h3>
       <p class="walk-town">${esc(w.town)} · ${esc(w.type)}</p>
-      <p>${esc(w.blurb)}</p>
+      ${w.blurb ? `<p>${esc(w.blurb)}</p>` : ""}
+      ${w.addedBy ? `<p class="hint">Added by ${esc(w.addedBy)}</p>` : ""}
       ${cur && cur.walk_id === w.id ? `<p><span class="badge next">This week's walk!</span></p>` : ""}
       ${past.length ? `<p><span class="badge visited">Walked ${past.length}× · last ${esc(fmtShort(past[0].meet_date))}</span></p>` : ""}
       ${notes.map((n) => `<p class="warn">${esc(n)}</p>`).join("")}
@@ -174,6 +324,8 @@
         <a class="btn small" href="${directionsUrl(w)}" target="_blank" rel="noopener">Directions</a>
         ${past.length ? `<button class="btn small ghost" data-action="open-past" data-event="${esc(past[0].id)}">Photos</button>` : ""}
       </div>
+      ${w.addedBy && isMe(w.addedBy) && !S.events.some((e) => e.walk_id === w.id)
+        ? `<p><button class="linkish" data-action="remove-spot" data-walk="${esc(w.id)}">Remove this spot</button></p>` : ""}
     </div>`;
   }
 
@@ -247,6 +399,7 @@
       <button class="btn big" data-action="spin" ${pool.length ? "" : "disabled"}>Spin the wheel</button>
       <p class="hint" style="margin-top:10px">${pool.length} spot${pool.length === 1 ? "" : "s"} in the hat. Places you've walked sit out until you've done them all, and seasonal beach bans are skipped.</p>
       ${ev ? `<p><button class="linkish" data-action="reroll-cancel">Never mind, keep it</button></p>` : ""}
+      <p><button class="linkish" data-action="add-spot">Know a good spot that's missing? Add it to the hat</button></p>
     </article>`;
   }
 
@@ -309,12 +462,47 @@
   }
 
   function spotsHtml() {
-    return `<label>Find a spot <input type="search" id="spot-search" placeholder="Name, town, beach, woods…" value="${esc(S.query)}"></label>
-      <p class="hint" style="margin:6px 0 0">${WALKS.length} dog-friendly spots. Grey = not yet walked, green = walked, orange = this week.</p>
+    if (S.adding) return addSpotHtml();
+    const added = WALKS.length - CURATED.length;
+    return `<div class="row" style="justify-content:space-between; margin-bottom:10px">
+        <p class="hint" style="margin:0; flex:1">${WALKS.length} dog-friendly spots${added ? `, ${added} added by friends` : ""}.</p>
+        <button class="btn small" data-action="add-spot">+ Add a spot</button>
+      </div>
+      <label>Find a spot <input type="search" id="spot-search" placeholder="Name, town, beach, woods…" value="${esc(S.query)}"></label>
+      <p class="hint" style="margin:6px 0 0">Grey = not yet walked, green = walked, orange = this week.</p>
       <div id="spot-list"></div>`;
   }
 
+  function addSpotHtml() {
+    return `<form class="card edit-form" id="spot-form" style="box-shadow:none" autocomplete="off">
+      <h2 style="font-size:1.25rem">Add a dog-friendly spot</h2>
+      <p class="hint">Once it's added, everyone sees it on the map and it can come up in future spins.</p>
+      <label>Name <input name="name" required minlength="2" maxlength="80" placeholder="e.g. Tillinghast Pond trails"></label>
+      <div>
+        <label for="place-q">Where is it?</label>
+        <div class="row" style="flex-wrap:nowrap; margin-top:4px">
+          <input id="place-q" placeholder="Search a park, trail or address">
+          <button type="button" class="btn small" data-action="search-place">Find</button>
+        </div>
+        <div id="place-hits" class="list" style="margin-top:6px"></div>
+        <p id="place-status" class="note">${S.draft ? "📍 Pin dropped. Drag it on the map to fine-tune." : "Search above, or tap the map to drop a pin at the parking spot/trailhead."}</p>
+      </div>
+      <label>Town <input name="town" maxlength="40" placeholder="Filled in from the pin"></label>
+      <label>What kind of walk?
+        <select name="type">${TYPES.map((t) => `<option>${t}</option>`).join("")}</select>
+      </label>
+      <label>What's it like? Parking tips? <textarea name="blurb" rows="3" maxlength="400" placeholder="e.g. Easy 2 mi loop around the pond, park at the end of Old Snake Hill Rd"></textarea></label>
+      <label class="check"><input type="checkbox" name="offseason"> Dogs only allowed here Oct–Mar (e.g. a swimming beach)</label>
+      <label class="check"><input type="checkbox" required> Dogs are allowed here (on leash is fine)</label>
+      <div class="row end">
+        <button type="button" class="btn ghost small" data-action="add-cancel">Cancel</button>
+        <button type="submit" class="btn small">Add spot</button>
+      </div>
+    </form>`;
+  }
+
   function renderSpotList() {
+    if (!$("#spot-list")) return;
     const q = S.query.trim().toLowerCase();
     const cur = currentEvent();
     const counts = {};
@@ -325,7 +513,8 @@
       if (!ws.length) return "";
       return `<h3 class="region-title">${esc(r)}</h3><div class="list">${ws.map((w) => {
         const badge = cur && cur.walk_id === w.id ? `<span class="badge next">This week</span>`
-          : counts[w.id] ? `<span class="badge visited">Walked ${counts[w.id]}×</span>` : "";
+          : counts[w.id] ? `<span class="badge visited">Walked ${counts[w.id]}×</span>`
+          : w.addedBy ? `<span class="badge">added by ${esc(w.addedBy)}</span>` : "";
         return `<button class="list-item" data-action="map-focus" data-walk="${esc(w.id)}">
           <h3>${esc(w.name)}</h3>${badge}
           <span class="meta">${esc(w.town)} · ${esc(w.type)}</span>
@@ -526,7 +715,7 @@
   // ---------- wiring ----------
   document.addEventListener("click", (e) => {
     const tab = e.target.closest(".tabs button");
-    if (tab) { S.tab = tab.dataset.tab; S.detail = null; render(); return; }
+    if (tab) { S.tab = tab.dataset.tab; S.detail = null; S.adding = false; clearDraft(); render(); return; }
     const el = e.target.closest("[data-action]");
     if (!el) return;
     const a = el.dataset.action;
@@ -551,9 +740,19 @@
     }
     else if (a === "back") { S.detail = null; render(); }
     else if (a === "photo") openLightbox(el.dataset.id);
+    else if (a === "add-spot") startAdding();
+    else if (a === "add-cancel") { S.adding = false; clearDraft(); render(); }
+    else if (a === "search-place") searchPlace();
+    else if (a === "pick-hit") pickHit(+el.dataset.i);
+    else if (a === "remove-spot") removeSpot(el.dataset.walk);
   });
   document.addEventListener("submit", (e) => {
     if (e.target.id === "edit-form") { e.preventDefault(); saveEdit(e.target); }
+    if (e.target.id === "spot-form") { e.preventDefault(); saveSpot(e.target); }
+  });
+  document.addEventListener("keydown", (e) => {
+    // Enter in the place search runs the search instead of submitting the form.
+    if (e.key === "Enter" && e.target.id === "place-q") { e.preventDefault(); searchPlace(); }
   });
   document.addEventListener("change", (e) => {
     if (e.target.matches("input[data-upload]")) uploadPhotos(e.target);
@@ -584,9 +783,18 @@
       console.error(e);
       toast("Couldn't reach the shared data. Check config.js / your connection.", 5000);
     }
+    // Separate from the rest so the site still works before supabase/002_spots.sql has been run.
+    try {
+      S.spots = await S.store.listSpots();
+      S.spotsReady = true;
+    } catch (e) {
+      console.warn("Friend-added spots unavailable (has supabase/002_spots.sql been run?)", e);
+      S.spotsReady = false;
+    }
+    setSpots(S.spots);
     // Background refreshes only redraw when something changed and nobody is mid-edit.
-    const sig = JSON.stringify([S.events, S.rsvps.length, S.photos.length]);
-    if (!force && (sig === S.signature || S.editing || S.spinning || S.rerolling || $("#me-dialog").open)) return;
+    const sig = JSON.stringify([S.events, S.rsvps.length, S.photos.length, S.spots.length]);
+    if (!force && (sig === S.signature || S.editing || S.spinning || S.rerolling || S.adding || $("#me-dialog").open)) return;
     S.signature = sig;
     render();
   }

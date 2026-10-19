@@ -9,7 +9,7 @@ window.AUGS_CONFIG = {
   // Shared mode: paste your Supabase project's URL and "anon public" key here
   // (Supabase dashboard -> Project Settings -> API). Leave blank for demo mode,
   // where everything is saved only in your own browser.
-  supabaseUrl: "",
-  supabaseAnonKey: "",
+  supabaseUrl: "https://zpaytdpbabllenywbypm.supabase.co",
+  supabaseAnonKey: "sb_publishable_odRkzZpJvB7IrPh76zfo5w__iIKTIXv",
   photoBucket: "photos",
 };

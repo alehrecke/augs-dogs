@@ -107,7 +107,7 @@
   async function createStore() {
     if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) return LocalStore();
     try {
-      await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js");
+      await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js");
       return SupabaseStore(window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey));
     } catch (e) {
       console.error("Couldn't load Supabase, falling back to demo mode", e);

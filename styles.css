@@ -11,6 +11,8 @@
   --visited: #3f8f5a;
   --visited-soft: #dcefe2;
   --pin: #8a7c70;
+  --nodog: #7b4fc9;
+  --nodog-soft: #ece4fb;
   --warn-bg: #fff3cd;
   --warn-ink: #6b4e00;
   --radius: 14px;
@@ -33,6 +35,8 @@
     --visited: #6cc28a;
     --visited-soft: #23392b;
     --pin: #a89a8d;
+    --nodog: #b08cf0;
+    --nodog-soft: #33284a;
     --warn-bg: #3d3216;
     --warn-ink: #f5d98a;
     --shadow: 0 2px 10px rgb(0 0 0 / 0.35);
@@ -42,7 +46,7 @@
 :root[data-theme="dark"] {
   --bg: #1d1916; --surface: #27221e; --surface-2: #322b26; --text: #f3ebe2; --muted: #b3a597;
   --line: #3e3630; --accent: #f08a54; --accent-ink: #1d1916; --accent-soft: #4a2f20;
-  --visited: #6cc28a; --visited-soft: #23392b; --pin: #a89a8d; --warn-bg: #3d3216; --warn-ink: #f5d98a;
+  --visited: #6cc28a; --visited-soft: #23392b; --pin: #a89a8d; --nodog: #b08cf0; --nodog-soft: #33284a; --warn-bg: #3d3216; --warn-ink: #f5d98a;
   --shadow: 0 2px 10px rgb(0 0 0 / 0.35);
   color-scheme: dark;
 }
@@ -166,6 +170,14 @@ input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-
 .pin { width: 16px; height: 16px; border-radius: 50%; background: var(--pin); border: 2px solid var(--surface); box-shadow: 0 1px 4px rgb(0 0 0 / 0.35); }
 .pin.visited { background: var(--visited); }
 .pin.next { width: 26px; height: 26px; background: var(--accent); border-width: 3px; animation: pulse 1.8s infinite; }
+.pin.nodog { background: var(--nodog); width: 14px; height: 14px; display: inline-block; vertical-align: -2px; }
+.badge.nodog { background: var(--nodog-soft); color: var(--nodog); }
+.map-toggle {
+  display: flex; align-items: center; gap: 6px; border: 2px solid rgb(0 0 0 / 0.2); border-radius: 8px;
+  background: var(--surface); color: var(--text); font-weight: 700; font-size: 0.8rem; padding: 6px 10px; cursor: pointer;
+}
+.map-toggle[aria-pressed="true"] { background: var(--nodog-soft); border-color: var(--nodog); }
+.nodog-list summary { cursor: pointer; margin-top: 18px; }
 .pin.draft { width: 24px; height: 24px; background: #2f6fd6; border-width: 3px; cursor: grab; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(232 116 59 / 0.55); } 50% { box-shadow: 0 0 0 10px rgb(232 116 59 / 0); } }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--text); }

@@ -15,6 +15,8 @@
     tab: "week",
     detail: null,        // event id open in the Past walks tab
     regions: new Set(REGIONS.filter((r) => r !== "Block Island")),
+    favOnly: false, easyOnly: false,   // extra spin filters
+    showNoDogs: false,                 // purple "no dogs allowed" map layer
     spinning: false, rerolling: false, editing: false,
     adding: false, draft: null, searchHits: [],   // "Add a spot" form state
     query: "",
@@ -34,6 +36,12 @@
   const walkFor = (id) => BY_ID[id] || { id, name: id, town: "", region: "", type: "", blurb: "", flags: [], lat: 41.7, lon: -71.5 };
   const directionsUrl = (w) => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(`${w.name}, ${w.town}, RI`);
   const pageUrl = () => location.href.split("#")[0];
+  const dogsOK = (w) => w.dogs !== "no";
+  const infoUrl = (w) => (w.eri ? `https://exploreri.org/gSiteReport2.php?siteID=${w.eri}` : null);
+  // "3.5 mi · moderate · woods", plus ★ community favourite and 💧 somewhere for dogs to wade.
+  const walkMeta = (w) =>
+    [w.miles && `${w.miles} mi`, w.difficulty, w.type].filter(Boolean).join(" · ") +
+    (w.fav ? " · ★ favourite" : "") + (w.water ? " · 💧 dog can wade" : "");
 
   function toast(msg, ms = 2600) {
     const t = $("#toast");
@@ -81,6 +89,10 @@
       if (md >= 401 && md <= 930) ok = false;
       else notes.push("Dogs are only allowed here in the off-season (Oct – Mar).");
     }
+    if (f.has("noDogsNesting")) {
+      if (md >= 401 && md <= 831) ok = false;
+      else notes.push("No dogs here Apr 1 – Aug 31 (bird nesting).");
+    }
     if (f.has("napatree")) {
       if (md >= 502 && md <= 907) ok = false;
       else notes.push("Keep dogs leashed and off the dunes. It's protected bird habitat.");
@@ -94,7 +106,8 @@
 
   // Walks you haven't done yet go first; once every eligible walk is done, anything but the last 5.
   function candidates(dateStr, excludeId) {
-    const eligible = WALKS.filter((w) => S.regions.has(w.region) && w.id !== excludeId && seasonCheck(w, dateStr).ok);
+    const eligible = WALKS.filter((w) => dogsOK(w) && S.regions.has(w.region) && w.id !== excludeId
+      && (!S.favOnly || w.fav) && (!S.easyOnly || w.difficulty === "easy") && seasonCheck(w, dateStr).ok);
     const visited = new Set(S.events.filter((e) => e.meet_date !== dateStr).map((e) => e.walk_id));
     const fresh = eligible.filter((w) => !visited.has(w.id));
     if (fresh.length) return fresh;
@@ -163,6 +176,24 @@
     }).addTo(map);
     WALKS.forEach(addMarker);
     map.on("click", (e) => { if (S.adding) setDraft(e.latlng.lat, e.latlng.lng); });
+
+    // Map button that shows/hides the "no dogs allowed" layer.
+    const NoDogsToggle = L.Control.extend({
+      onAdd() {
+        const b = L.DomUtil.create("button", "map-toggle");
+        b.type = "button";
+        b.innerHTML = `<span class="pin nodog"></span> No-dog walks`;
+        b.setAttribute("aria-pressed", "false");
+        L.DomEvent.disableClickPropagation(b);   // also stops the document click delegation, so wire it here
+        L.DomEvent.on(b, "click", () => {
+          S.showNoDogs = !S.showNoDogs;
+          updatePins();
+          if (S.showNoDogs) toast("Purple = beautiful, but no dogs allowed. Humans-only walks.", 3500);
+        });
+        return b;
+      },
+    });
+    new NoDogsToggle({ position: "topright" }).addTo(map);
   }
 
   // ---------- friend-added spots ----------
@@ -303,25 +334,52 @@
     const cur = currentEvent();
     const visited = new Set(pastEvents().map((e) => e.walk_id));
     for (const w of WALKS) {
+      const m = markers[w.id];
+      if (!dogsOK(w)) {
+        m.setIcon(pinIcon("nodog"));
+        if (S.showNoDogs) m.addTo(map); else m.remove();
+        continue;
+      }
       const cls = cur && cur.walk_id === w.id ? "next" : visited.has(w.id) ? "visited" : "";
-      markers[w.id].setIcon(pinIcon(cls)).setZIndexOffset(cls === "next" ? 1000 : cls ? 500 : 0);
+      m.setIcon(pinIcon(cls)).setZIndexOffset(cls === "next" ? 1000 : cls ? 500 : 0);
     }
+    const t = $(".map-toggle");
+    if (t) t.setAttribute("aria-pressed", String(S.showNoDogs));
+  }
+
+  function noDogsPopupHtml(w) {
+    return `<div class="popup">
+      <h3>${esc(w.name)}</h3>
+      <p class="walk-town">${esc(w.town)}${w.miles ? ` · ${w.miles} mi` : ""}</p>
+      <p><span class="badge nodog">🚫 No dogs allowed</span></p>
+      <p>${esc(w.blurb)}</p>
+      <p class="hint"><strong>Why:</strong> ${esc(w.noDogs.why)}</p>
+      <p class="hint"><strong>Enforcement:</strong> ${esc(w.noDogs.enforcement)}</p>
+      <p class="hint">Worth a humans-only walk. Leave the pups at home.</p>
+      <div class="row">
+        <a class="btn small ghost" href="${directionsUrl(w)}" target="_blank" rel="noopener">Directions</a>
+        ${infoUrl(w) ? `<a class="btn small ghost" href="${infoUrl(w)}" target="_blank" rel="noopener">Trail info</a>` : ""}
+      </div>
+    </div>`;
   }
 
   function popupHtml(w) {
+    if (!dogsOK(w)) return noDogsPopupHtml(w);
     const past = pastEvents().filter((e) => e.walk_id === w.id);
     const cur = currentEvent();
     const { notes } = seasonCheck(w, nextMeetDate());
     return `<div class="popup">
       <h3>${esc(w.name)}</h3>
-      <p class="walk-town">${esc(w.town)} · ${esc(w.type)}</p>
+      <p class="walk-town">${esc(w.town)} · ${esc(walkMeta(w))}</p>
       ${w.blurb ? `<p>${esc(w.blurb)}</p>` : ""}
+      ${w.tips ? `<p class="hint">💡 ${esc(w.tips)}</p>` : ""}
       ${w.addedBy ? `<p class="hint">Added by ${esc(w.addedBy)}</p>` : ""}
       ${cur && cur.walk_id === w.id ? `<p><span class="badge next">This week's walk!</span></p>` : ""}
       ${past.length ? `<p><span class="badge visited">Walked ${past.length}× · last ${esc(fmtShort(past[0].meet_date))}</span></p>` : ""}
       ${notes.map((n) => `<p class="warn">${esc(n)}</p>`).join("")}
       <div class="row">
         <a class="btn small" href="${directionsUrl(w)}" target="_blank" rel="noopener">Directions</a>
+        ${infoUrl(w) ? `<a class="btn small ghost" href="${infoUrl(w)}" target="_blank" rel="noopener">Trail map</a>` : ""}
         ${past.length ? `<button class="btn small ghost" data-action="open-past" data-event="${esc(past[0].id)}">Photos</button>` : ""}
       </div>
       ${w.addedBy && isMe(w.addedBy) && !S.events.some((e) => e.walk_id === w.id)
@@ -332,6 +390,7 @@
   function focusWalk(id) {
     const w = walkFor(id);
     if (!markers[id]) return;
+    if (!dogsOK(w) && !S.showNoDogs) { S.showNoDogs = true; updatePins(); }
     if (window.innerWidth < 860) $("#map").scrollIntoView({ behavior: "smooth", block: "start" });
     map.flyTo([w.lat, w.lon], 13, { duration: 0.8 });
     setTimeout(() => markers[id].openPopup(), 850);
@@ -360,13 +419,16 @@
       <p class="when">${esc(fmtDate(ev.meet_date))} · ${esc(fmtTime(ev.meet_time || cfg.meetTime))}</p>
       <h2 class="walk-name">${esc(w.name)}</h2>
       <p class="walk-town">${esc(w.town)}${ev.picked_by ? ` · spun by ${esc(ev.picked_by)}` : ""}</p>
+      <p class="hint" style="margin:0 0 8px">${esc(walkMeta(w))}</p>
       <p class="blurb">${esc(w.blurb)}</p>
+      ${w.tips ? `<p class="hint">💡 ${esc(w.tips)}</p>` : ""}
       ${ev.note ? `<p class="note"><strong>Meet:</strong> ${esc(ev.note)}</p>` : ""}
       ${notes.map((n) => `<p class="warn">${esc(n)}</p>`).join("")}
       ${S.editing ? editFormHtml(ev) : ""}
       <div class="row">
         <a class="btn small" href="${directionsUrl(w)}" target="_blank" rel="noopener">Directions</a>
         <button class="btn small ghost" data-action="map-focus" data-walk="${esc(w.id)}">On the map</button>
+        ${infoUrl(w) ? `<a class="btn small ghost" href="${infoUrl(w)}" target="_blank" rel="noopener">Trail map</a>` : ""}
         <button class="btn small ghost" data-action="calendar">Add to calendar</button>
         <button class="btn small ghost" data-action="invite">Share invite</button>
         <button class="btn small ghost" data-action="reroll">🎲 Re-roll</button>
@@ -393,7 +455,11 @@
       <p class="when">${esc(fmtDate(date))} · ${esc(fmtTime(ev ? ev.meet_time || cfg.meetTime : cfg.meetTime))}</p>
       <p>${ev ? `Currently <strong>${esc(walkFor(ev.walk_id).name)}</strong>. Spin again for somewhere else.` : "No spot picked yet. Spin to choose this week's walk!"}</p>
       <div class="row filters">${REGIONS.map((r) => `<button class="chip" data-action="region" data-region="${esc(r)}" aria-pressed="${S.regions.has(r)}">${esc(r)}</button>`).join("")}</div>
-      <div class="slot" id="slot">${pool.length ? "?" : "No spots in those regions"}</div>
+      <div class="row filters">
+        <button class="chip" data-action="toggle-filter" data-filter="favOnly" aria-pressed="${S.favOnly}">★ Favourites only</button>
+        <button class="chip" data-action="toggle-filter" data-filter="easyOnly" aria-pressed="${S.easyOnly}">Easy walks only</button>
+      </div>
+      <div class="slot" id="slot">${pool.length ? "?" : "No spots match those filters"}</div>
       <button class="btn big" data-action="spin" ${pool.length ? "" : "disabled"}>Spin the wheel</button>
       <p class="hint" style="margin-top:10px">${pool.length} spot${pool.length === 1 ? "" : "s"} in the hat. Places you've walked sit out until you've done them all, and seasonal beach bans are skipped.</p>
       ${ev ? `<p><button class="linkish" data-action="reroll-cancel">Never mind, keep it</button></p>` : ""}
@@ -463,11 +529,11 @@
     if (S.adding) return addSpotHtml();
     const added = WALKS.length - CURATED.length;
     return `<div class="row" style="justify-content:space-between; margin-bottom:10px">
-        <p class="hint" style="margin:0; flex:1">${WALKS.length} dog-friendly spots${added ? `, ${added} added by friends` : ""}.</p>
+        <p class="hint" style="margin:0; flex:1">${WALKS.filter(dogsOK).length} dog-friendly spots${added ? `, ${added} added by friends` : ""}.</p>
         <button class="btn small" data-action="add-spot">+ Add a spot</button>
       </div>
       <label>Find a spot <input type="search" id="spot-search" placeholder="Name, town, beach, woods…" value="${esc(S.query)}"></label>
-      <p class="hint" style="margin:6px 0 0">Grey = not yet walked, green = walked, orange = this week.</p>
+      <p class="hint" style="margin:6px 0 0">Grey = not yet walked, green = walked, orange = this week, purple = no dogs allowed (map toggle).</p>
       <div id="spot-list"></div>`;
   }
 
@@ -505,8 +571,17 @@
     const cur = currentEvent();
     const counts = {};
     pastEvents().forEach((e) => { counts[e.walk_id] = (counts[e.walk_id] || 0) + 1; });
-    const match = WALKS.filter((w) => !q || `${w.name} ${w.town} ${w.type} ${w.region} ${w.blurb}`.toLowerCase().includes(q));
-    $("#spot-list").innerHTML = match.length ? REGIONS.map((r) => {
+    const all = WALKS.filter((w) => !q || `${w.name} ${w.town} ${w.type} ${w.region} ${w.blurb}`.toLowerCase().includes(q));
+    const match = all.filter(dogsOK);
+    const noDogs = all.filter((w) => !dogsOK(w));
+    const noDogsHtml = noDogs.length ? `<details class="nodog-list" ${q ? "open" : ""}>
+        <summary class="region-title">🚫 No dogs allowed: humans-only walks (${noDogs.length})</summary>
+        <div class="list">${noDogs.map((w) => `<button class="list-item" data-action="map-focus" data-walk="${esc(w.id)}">
+          <h3>${esc(w.name)}</h3><span class="badge nodog">no dogs</span>
+          <span class="meta">${esc(w.town)}${w.miles ? ` · ${w.miles} mi` : ""}</span>
+        </button>`).join("")}</div>
+      </details>` : "";
+    $("#spot-list").innerHTML = (match.length || noDogs.length) ? REGIONS.map((r) => {
       const ws = match.filter((w) => w.region === r);
       if (!ws.length) return "";
       return `<h3 class="region-title">${esc(r)}</h3><div class="list">${ws.map((w) => {
@@ -515,10 +590,10 @@
           : w.addedBy ? `<span class="badge">added by ${esc(w.addedBy)}</span>` : "";
         return `<button class="list-item" data-action="map-focus" data-walk="${esc(w.id)}">
           <h3>${esc(w.name)}</h3>${badge}
-          <span class="meta">${esc(w.town)} · ${esc(w.type)}</span>
+          <span class="meta">${esc(w.town)} · ${esc(walkMeta(w))}</span>
         </button>`;
       }).join("")}</div>`;
-    }).join("") : `<p class="empty">No spots match “${esc(S.query)}”.</p>`;
+    }).join("") + noDogsHtml : `<p class="empty">No spots match “${esc(S.query)}”.</p>`;
   }
 
   // ---------- actions ----------
@@ -532,6 +607,7 @@
     if (!me) return;
 
     S.spinning = true;
+    map.closePopup();
     const slot = $("#slot");
     $('[data-action="spin"]').disabled = true;
     const pick = pool[Math.floor(Math.random() * pool.length)];
@@ -738,6 +814,7 @@
     }
     else if (a === "back") { S.detail = null; render(); }
     else if (a === "photo") openLightbox(el.dataset.id);
+    else if (a === "toggle-filter") { S[el.dataset.filter] = !S[el.dataset.filter]; render(); }
     else if (a === "add-spot") startAdding();
     else if (a === "add-cancel") { S.adding = false; clearDraft(); render(); }
     else if (a === "search-place") searchPlace();

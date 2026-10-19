@@ -2,8 +2,9 @@
 
 A tiny website for a friends' weekly dog walk somewhere in Rhode Island.
 
-- **Map** of 49 dog-friendly walks around RI (state parks, management areas, bike paths, city parks, off-season beaches, Block Island).
-- **Spin the wheel** to pick each week's walk at random. It skips places you've already been until you've done them all, and skips beaches during their summer dog bans. Region chips narrow the draw (Block Island is off by default because it needs a ferry).
+- **Map** of 119 dog-friendly walks around RI with length, difficulty, ★ community favourites, 💧 swim spots, parking tips and trail-map links. Built from Explore RI, dog-hiking guides and official rules (see [docs/RESEARCH.md](docs/RESEARCH.md)).
+- **No-dogs layer** (purple, map toggle): 20 beautiful places where dogs are banned, with why and how it's enforced. Never in the spin.
+- **Spin the wheel** to pick each week's walk at random. It skips places you've already been until you've done them all, and skips beaches during their summer dog bans. Region chips plus **★ Favourites only** / **Easy walks only** narrow the draw (Block Island is off by default because it needs a ferry).
 - **"I'm in!"** RSVPs, an editable meeting spot/time, **Add to calendar**, and a **Share invite** text for the group chat.
 - **Past walks** turn green on the map, and each one keeps a shared photo album anyone can add to.
 - **Add a spot**: anyone can add a dog-friendly place they know (search for it or tap the map). It shows on the map for everyone and goes into the hat for future spins.
@@ -66,11 +67,13 @@ Every later change is just `git commit` + `git push`, and the site updates itsel
 
 *No-git alternative:* drag this whole folder onto <https://app.netlify.com/drop>.
 
+How the group might use it week to week: [docs/HOW-WE-USE-IT.md](docs/HOW-WE-USE-IT.md).
+
 ## Day-to-day
 
 - **Change the meet day/time:** `meetDay` / `meetTime` in `config.js`. A single week can also be changed in the app ("Edit time / meeting spot").
 - **Remove a friend-added spot:** whoever added it can remove it from its map popup (until it's been walked), or delete the row in Supabase → **Table Editor → spots**.
-- **Add or fix a built-in walk:** edit `tools/walks-source.json`, then run `python tools/build_walks.py`. That looks up map coordinates automatically and regenerates `data/walks.js`. If a place can't be found, add `"lat"`/`"lon"` by hand (right-click in Google Maps → copy coordinates).
+- **Add or fix a built-in walk:** edit `tools/walks-source.json` (fields: `miles`, `difficulty`, `fav`, `water`, `tips`, `flags`, `eri`, and `dogs: "no"` + `noDogs` for the purple layer), then run `python tools/build_walks.py`. That looks up map coordinates automatically and regenerates `data/walks.js`. If a place can't be found, add `"lat"`/`"lon"` by hand (right-click in Google Maps → copy coordinates).
 - **Delete a photo or a bad event:** Supabase dashboard → **Table Editor** (and **Storage → photos** for the file itself).
 
 ## Things to know

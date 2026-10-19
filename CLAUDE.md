@@ -18,8 +18,12 @@ software person: explain choices in plain language and keep the stack boring.
   so the site still works if the table is missing (`S.spotsReady`).
 - Built-in walk data: edit `tools/walks-source.json`, run `python tools/build_walks.py` (Nominatim
   geocoding) → generates `data/walks.js`. Never hand-edit `data/walks.js`.
+- v2 walk schema: `miles`, `difficulty` (easy/moderate/hard), `fav`, `water`, `tips`, `eri` (Explore RI
+  siteID → "Trail map" link), `dogs: "no"` + `noDogs {why, enforcement}` = purple layer, filtered out of
+  `candidates()` by `dogsOK()`. Research + sources in `docs/RESEARCH.md`; re-scrape with
+  `tools/scrape_exploreri.py`. Reddit is unreachable from Claude's tools (403).
 - Seasonal dog rules live in `seasonCheck()` in `js/app.js`, keyed off each walk's `flags`
-  (`stateBeach`, `beachOnly`, `townBeachNarr`, `napatree`, `orange`, `island`).
+  (`stateBeach`, `beachOnly`, `townBeachNarr`, `napatree`, `orange`, `island`, `offSeasonOnly`, `noDogsNesting`).
 
 ## Testing
 
@@ -39,3 +43,5 @@ note → photo upload → lightbox → re-roll → past walks → spot search, a
 - 2026-10-19: "Add a spot" feature (search or tap map, CT/MA warning, remove own unwalked spot).
   Tested in demo mode; `002_spots.sql` run by Alex, live insert/delete + RI-bounds check
   verified via REST, live site opens the form with no errors.
+- 2026-10-19: v2 walk list: 119 dog walks (28 ★), 20 no-dog places (purple toggle layer). Spin filters
+  ★ Favourites / Easy only. Tested in demo mode (filters, 12 spins never pick no-dog, phone layout).

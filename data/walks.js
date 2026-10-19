@@ -10,8 +10,14 @@ window.WALKS = [
   "flags": [
    "stateBeach"
   ],
-  "lat": 41.89598,
-  "lon": -71.42962
+  "lat": 41.89601,
+  "lon": -71.43705,
+  "miles": 3.1,
+  "difficulty": "easy",
+  "fav": true,
+  "water": true,
+  "tips": "Big free lots. The 3.1 mi loop road around Olney Pond is paved.",
+  "eri": 114
  },
  {
   "id": "chase-farm",
@@ -22,7 +28,12 @@ window.WALKS = [
   "blurb": "Open farm fields and a loop trail, with a pond dogs like.",
   "lat": 41.90983,
   "lon": -71.42436,
-  "flags": []
+  "flags": [],
+  "miles": 1.7,
+  "difficulty": "easy",
+  "fav": true,
+  "water": true,
+  "tips": "Busy with dogs. Leash rules are posted and enforced by fellow walkers."
  },
  {
   "id": "blackstone-bikeway-lonsdale",
@@ -33,7 +44,11 @@ window.WALKS = [
   "blurb": "Flat paved path between the river and the canal. Easy for any dog.",
   "lat": 41.9227,
   "lon": -71.4155,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "tips": "Park at the Lonsdale Ave lot; do any out-and-back distance."
  },
  {
   "id": "diamond-hill",
@@ -42,9 +57,15 @@ window.WALKS = [
   "region": "North",
   "type": "woods",
   "blurb": "Short, steep climb up an old ski hill to rock ledges with views.",
-  "lat": 42.00042,
-  "lon": -71.41561,
-  "flags": []
+  "lat": 42.00258,
+  "lon": -71.41736,
+  "flags": [],
+  "miles": 3.8,
+  "difficulty": "hard",
+  "fav": false,
+  "water": false,
+  "tips": "Steep scramble up the old ski slope; gentler trails behind.",
+  "eri": 79
  },
  {
   "id": "neutaconkanut",
@@ -53,9 +74,15 @@ window.WALKS = [
   "region": "Providence",
   "type": "woods",
   "blurb": "Surprisingly wild wooded hill with trails, right inside the city.",
-  "lat": 41.80521,
-  "lon": -71.47278,
-  "flags": []
+  "lat": 41.81117,
+  "lon": -71.46219,
+  "flags": [],
+  "miles": 3.8,
+  "difficulty": "hard",
+  "fav": true,
+  "water": false,
+  "tips": "Park at the Killingly St lot by the ball field. Rocky and steep in places.",
+  "eri": 80
  },
  {
   "id": "roger-williams-park",
@@ -66,7 +93,11 @@ window.WALKS = [
   "blurb": "Big Victorian park with ponds and lawns, plus lots of other dogs.",
   "lat": 41.78273,
   "lon": -71.41088,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "tips": "Leashed dogs are only allowed in the park's non-recreational areas."
  },
  {
   "id": "blackstone-blvd",
@@ -77,7 +108,12 @@ window.WALKS = [
   "blurb": "Shaded walking median about 1.6 miles long. A classic East Side dog stroll.",
   "lat": 41.8394,
   "lon": -71.3854,
-  "flags": []
+  "flags": [],
+  "miles": 1.6,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "tips": "Street parking along the boulevard."
  },
  {
   "id": "india-point",
@@ -88,7 +124,11 @@ window.WALKS = [
   "blurb": "Waterfront park at the top of the bay. Connects to the East Bay Bike Path.",
   "lat": 41.81746,
   "lon": -71.38982,
-  "flags": []
+  "flags": [],
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "woonasquatucket-greenway",
@@ -97,9 +137,14 @@ window.WALKS = [
   "region": "Providence",
   "type": "path",
   "blurb": "Paved riverside path from Eagle Square west toward Johnston.",
-  "lat": 41.8297,
-  "lon": -71.44,
-  "flags": []
+  "lat": 41.82754,
+  "lon": -71.41646,
+  "flags": [],
+  "miles": 7.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "eri": 106
  },
  {
   "id": "ten-mile-greenway",
@@ -110,7 +155,11 @@ window.WALKS = [
   "blurb": "Quiet paved path along the Ten Mile River and Omega Pond.",
   "lat": 41.837,
   "lon": -71.364,
-  "flags": []
+  "flags": [],
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false
  },
  {
   "id": "snake-den",
@@ -121,7 +170,14 @@ window.WALKS = [
   "blurb": "Farmland and woods with trails down into a rocky gorge.",
   "lat": 41.8437,
   "lon": -71.5152,
-  "flags": []
+  "flags": [
+   "orange"
+  ],
+  "miles": 2.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "tips": "Only ~3 parking spots on Brown Ave."
  },
  {
   "id": "george-washington-ma",
@@ -133,8 +189,14 @@ window.WALKS = [
   "flags": [
    "orange"
   ],
-  "lat": 41.94018,
-  "lon": -71.77109
+  "lat": 41.92305,
+  "lon": -71.75639,
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": true,
+  "tips": "Walkabout Trail comes in 2, 6 and 8 mile loops from the campground lot.",
+  "eri": 75
  },
  {
   "id": "pulaski",
@@ -147,8 +209,12 @@ window.WALKS = [
    "orange",
    "stateBeach"
   ],
-  "lat": 41.9325,
-  "lon": -71.7925
+  "lat": 41.931,
+  "lon": -71.796,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "eri": 76
  },
  {
   "id": "jerimoth-hill",
@@ -159,7 +225,12 @@ window.WALKS = [
   "blurb": "Short walk to RI's highest point (812 ft). Pair it with a coffee stop.",
   "lat": 41.84922,
   "lon": -71.77925,
-  "flags": []
+  "flags": [],
+  "miles": 0.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "tips": "Tiny walk; combine with a nearby trail."
  },
  {
   "id": "goddard",
@@ -172,7 +243,12 @@ window.WALKS = [
    "stateBeach"
   ],
   "lat": 41.6537,
-  "lon": -71.4353
+  "lon": -71.4353,
+  "miles": 3.7,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "tips": "1.4 or 3.7 mi loops; free parking."
  },
  {
   "id": "warwick-city-park",
@@ -183,7 +259,10 @@ window.WALKS = [
   "blurb": "Wooded loop trails and a bike path on a peninsula in Buttonwoods.",
   "lat": 41.6928,
   "lon": -71.41167,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "rocky-point",
@@ -194,7 +273,10 @@ window.WALKS = [
   "blurb": "Paved loop along the shore where the old amusement park stood.",
   "lat": 41.69039,
   "lon": -71.36628,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "washington-secondary",
@@ -205,7 +287,10 @@ window.WALKS = [
   "blurb": "Long, flat rail trail. Pick any stretch, e.g. from Coventry center.",
   "lat": 41.6987,
   "lon": -71.5465,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "trestle-trail",
@@ -216,7 +301,10 @@ window.WALKS = [
   "blurb": "Unpaved rail trail past ponds and woods heading toward Connecticut.",
   "lat": 41.6895,
   "lon": -71.6445,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "big-river",
@@ -229,7 +317,11 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.63716,
-  "lon": -71.58635
+  "lon": -71.58635,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "tips": "Huge, easy to get turned around. Bring a map app."
  },
  {
   "id": "wickaboxet",
@@ -242,7 +334,10 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.64702,
-  "lon": -71.72538
+  "lon": -71.72538,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false
  },
  {
   "id": "breakheart-pond",
@@ -255,7 +350,10 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.59905,
-  "lon": -71.70118
+  "lon": -71.70118,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true
  },
  {
   "id": "stepstone-falls",
@@ -268,7 +366,12 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.6089,
-  "lon": -71.7484
+  "lon": -71.7484,
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": true,
+  "tips": "Steep 0.5 mi gravel road to a ~3-car lot; rough in snow or mud."
  },
  {
   "id": "mount-tom",
@@ -281,7 +384,10 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.581,
-  "lon": -71.713
+  "lon": -71.713,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false
  },
  {
   "id": "rome-point",
@@ -292,7 +398,12 @@ window.WALKS = [
   "blurb": "Woods trail out to a rocky point. Harbor seals haul out offshore in winter.",
   "lat": 41.5385,
   "lon": -71.4228,
-  "flags": []
+  "flags": [],
+  "miles": 2.0,
+  "difficulty": "easy",
+  "fav": true,
+  "water": true,
+  "tips": "Popular with dog walkers; keep leashed. Seals offshore Nov\u2013Apr."
  },
  {
   "id": "ryan-park",
@@ -303,7 +414,10 @@ window.WALKS = [
   "blurb": "Town park with wooded loops and a pond.",
   "lat": 41.56495,
   "lon": -71.47523,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "wilson-park",
@@ -314,7 +428,10 @@ window.WALKS = [
   "blurb": "Lawns and trails on Mill Cove near Wickford.",
   "lat": 41.57584,
   "lon": -71.4538,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "great-swamp",
@@ -327,7 +444,12 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.46104,
-  "lon": -71.58657
+  "lon": -71.58657,
+  "miles": 4.0,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "tips": "There's a shooting range by the trailhead, so noise-shy dogs may hate it."
  },
  {
   "id": "south-county-bike-path",
@@ -338,7 +460,10 @@ window.WALKS = [
   "blurb": "Paved rail trail from Kingston Station to Narragansett.",
   "lat": 41.4505,
   "lon": -71.4955,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "black-point",
@@ -349,7 +474,10 @@ window.WALKS = [
   "blurb": "Rugged shoreline path through scrub to the rocks and ruins near Scarborough.",
   "lat": 41.3943,
   "lon": -71.4677,
-  "flags": []
+  "flags": [],
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true
  },
  {
   "id": "narragansett-town-beach",
@@ -362,7 +490,10 @@ window.WALKS = [
    "townBeachNarr"
   ],
   "lat": 41.4364,
-  "lon": -71.45337
+  "lon": -71.45337,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "east-matunuck",
@@ -372,11 +503,14 @@ window.WALKS = [
   "type": "beach",
   "blurb": "Wide surf beach. Dogs welcome on leash only in the off-season.",
   "flags": [
-   "stateBeach",
-   "beachOnly"
+   "beachOnly",
+   "stateBeach"
   ],
   "lat": 41.3758,
-  "lon": -71.51681
+  "lon": -71.51681,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "burlingame",
@@ -389,7 +523,11 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.38001,
-  "lon": -71.67866
+  "lon": -71.67866,
+  "miles": 8.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true
  },
  {
   "id": "ninigret-park",
@@ -400,7 +538,10 @@ window.WALKS = [
   "blurb": "Old airfield turned park: big open loops and a bike path.",
   "lat": 41.37015,
   "lon": -71.66431,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "misquamicut",
@@ -410,11 +551,14 @@ window.WALKS = [
   "type": "beach",
   "blurb": "Miles of sand to walk once summer crowds and the dog ban are gone.",
   "flags": [
-   "stateBeach",
-   "beachOnly"
+   "beachOnly",
+   "stateBeach"
   ],
   "lat": 41.32296,
-  "lon": -71.80273
+  "lon": -71.80273,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "wilcox-park",
@@ -425,7 +569,10 @@ window.WALKS = [
   "blurb": "Lovely downtown arboretum park. Walk it and get lunch in town after.",
   "lat": 41.37837,
   "lon": -71.8282,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": false,
+  "water": false
  },
  {
   "id": "napatree",
@@ -438,7 +585,12 @@ window.WALKS = [
    "napatree"
   ],
   "lat": 41.311,
-  "lon": -71.871
+  "lon": -71.871,
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "tips": "Paid Watch Hill parking. Off-season it's one of the best walks in the state."
  },
  {
   "id": "beavertail",
@@ -449,7 +601,12 @@ window.WALKS = [
   "blurb": "Dramatic rocky shoreline, lighthouse and big ocean views.",
   "lat": 41.45716,
   "lon": -71.39533,
-  "flags": []
+  "flags": [],
+  "miles": 2.3,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "tips": "Four free lots. Rocks get slippery near the water."
  },
  {
   "id": "fort-wetherill",
@@ -460,7 +617,11 @@ window.WALKS = [
   "blurb": "Cliffs, old fort bunkers and a cove looking across to Newport.",
   "lat": 41.47893,
   "lon": -71.36574,
-  "flags": []
+  "flags": [],
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "cliff-walk",
@@ -469,9 +630,15 @@ window.WALKS = [
   "region": "Newport & East Bay",
   "type": "coast",
   "blurb": "Famous 3.5 mi shoreline walk past the mansions. Busy in summer.",
-  "lat": 41.4775,
-  "lon": -71.297,
-  "flags": []
+  "lat": 41.48519,
+  "lon": -71.29757,
+  "flags": [],
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "tips": "3.5 mi one-way. Easy paved start at Memorial Blvd, rocky further south. Crowded on summer weekends.",
+  "eri": 121
  },
  {
   "id": "brenton-point",
@@ -482,7 +649,10 @@ window.WALKS = [
   "blurb": "Windy open lawns and rocky shore at the end of Ocean Drive. Bring a kite.",
   "lat": 41.45192,
   "lon": -71.35412,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": true,
+  "water": false
  },
  {
   "id": "weetamoo",
@@ -491,9 +661,15 @@ window.WALKS = [
   "region": "Newport & East Bay",
   "type": "woods",
   "blurb": "Tiverton Land Trust woods with stone walls, a mill site and holly groves.",
-  "lat": 41.5925,
-  "lon": -71.17,
-  "flags": []
+  "lat": 41.57225,
+  "lon": -71.17728,
+  "flags": [],
+  "miles": 7.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": true,
+  "tips": "Lot on East Rd (or ~15 spots on Lafayette Rd). Loops of 2\u20135 mi.",
+  "eri": 51
  },
  {
   "id": "fort-barton",
@@ -502,9 +678,15 @@ window.WALKS = [
   "region": "Newport & East Bay",
   "type": "woods",
   "blurb": "Trails off the Revolutionary War redoubt, with a tower view over the Sakonnet.",
-  "lat": 41.62575,
-  "lon": -71.19671,
-  "flags": []
+  "lat": 41.62507,
+  "lon": -71.20752,
+  "flags": [],
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "tips": "Climb the observation tower first. Stairs and footbridges on the woods loop.",
+  "eri": 50
  },
  {
   "id": "sapowet",
@@ -517,7 +699,10 @@ window.WALKS = [
    "orange"
   ],
   "lat": 41.6358,
-  "lon": -71.217
+  "lon": -71.217,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "colt",
@@ -528,7 +713,11 @@ window.WALKS = [
   "blurb": "Big bayside lawns, stone walls and shore paths. Meet at the stone barns.",
   "lat": 41.67754,
   "lon": -71.29845,
-  "flags": []
+  "flags": [],
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": true,
+  "water": true
  },
  {
   "id": "east-bay-bike-path",
@@ -539,7 +728,10 @@ window.WALKS = [
   "blurb": "Paved path over marsh bridges. Easy out-and-back from Barrington.",
   "lat": 41.7385,
   "lon": -71.308,
-  "flags": []
+  "flags": [],
+  "difficulty": "easy",
+  "fav": true,
+  "water": false
  },
  {
   "id": "haines",
@@ -552,7 +744,10 @@ window.WALKS = [
    "stateBeach"
   ],
   "lat": 41.75118,
-  "lon": -71.34379
+  "lon": -71.34379,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true
  },
  {
   "id": "clay-head",
@@ -565,7 +760,12 @@ window.WALKS = [
    "island"
   ],
   "lat": 41.2125,
-  "lon": -71.564
+  "lon": -71.564,
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "tips": "Ferry dogs ride free. Borrowable orange vests at trailheads."
  },
  {
   "id": "rodmans-hollow",
@@ -578,6 +778,1528 @@ window.WALKS = [
    "island"
   ],
   "lat": 41.158,
-  "lon": -71.588
+  "lon": -71.588,
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "tips": "Borrowable orange vests in the trailhead mailbox."
+ },
+ {
+  "id": "osamequin",
+  "name": "Osamequin Nature Trails",
+  "town": "Barrington",
+  "region": "Newport & East Bay",
+  "type": "coast",
+  "blurb": "Boardwalks and woods on Hundred Acre Cove, with osprey nests and salt marsh views.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "eri": 28,
+  "tips": "Wear blaze orange in season: hunting is allowed on nearby land.",
+  "lat": 41.76055,
+  "lon": -71.32278
+ },
+ {
+  "id": "veterans-park-barrington",
+  "name": "Veterans Memorial Park (Brickyard Pond)",
+  "town": "Barrington",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Loops around 84-acre Brickyard Pond, right off the East Bay Bike Path.",
+  "miles": 2.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 27,
+  "lat": 41.73598,
+  "lon": -71.31257
+ },
+ {
+  "id": "perry-tavares",
+  "name": "Perry Tavares Farm",
+  "town": "Bristol",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Stone walls, vernal pools and towering old oaks on a quiet Bristol trail network.",
+  "miles": 2.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 72,
+  "lat": 41.7112,
+  "lon": -71.27583
+ },
+ {
+  "id": "burrillville-bike-path",
+  "name": "Burrillville Bike Path",
+  "town": "Burrillville",
+  "region": "North",
+  "type": "path",
+  "blurb": "Short rail trail between Harrisville and Pascoag villages.",
+  "miles": 1.2,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 85,
+  "lat": 41.9602,
+  "lon": -71.69651
+ },
+ {
+  "id": "vock",
+  "name": "Vock Conservation Area (Bobcat Loop)",
+  "town": "Burrillville",
+  "region": "North",
+  "type": "woods",
+  "blurb": "A one-mile woodland loop in the quiet northwest corner.",
+  "miles": 1.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 132,
+  "lat": 41.95386,
+  "lon": -71.74278
+ },
+ {
+  "id": "charlestown-moraine",
+  "name": "Charlestown Moraine Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Hilly glacial moraine covered in mountain laurel: the edge of the last ice sheet.",
+  "miles": 1.9,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 109,
+  "lat": 41.38577,
+  "lon": -71.66637
+ },
+ {
+  "id": "mill-pond-charlestown",
+  "name": "Mill Pond Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Pond-edge woodland walk past an old trout hatchery.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 130,
+  "lat": 41.38879,
+  "lon": -71.64092
+ },
+ {
+  "id": "ninigret-kettle-pond",
+  "name": "Ninigret Refuge \u2013 Kettle Pond Trails",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Leashed dogs are allowed on the Kettle Pond visitor-center trails (except the Toupoysett Pond Trail). It's the only dog-OK corner of a RI wildlife refuge on the mainland.",
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "orange"
+  ],
+  "eri": 66,
+  "tips": "Dogs are NOT allowed on the refuge's Salt Pond/Grassy Point unit south of Route 1.",
+  "lat": 41.36711,
+  "lon": -71.68555
+ },
+ {
+  "id": "sprague-forest",
+  "name": "Patricia Sprague Forest Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Floodplain forest and fields along the Pawcatuck River.",
+  "miles": 1.3,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 113,
+  "lat": 41.45132,
+  "lon": -71.6559
+ },
+ {
+  "id": "richard-trails",
+  "name": "Richard Trails Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Pitch-pine hills, with an easy trail and a surprisingly steep one.",
+  "miles": 1.9,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 112,
+  "lat": 41.40331,
+  "lon": -71.64138
+ },
+ {
+  "id": "schoolhouse-pond",
+  "name": "Schoolhouse Pond Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Very easy walking to a secluded pond.",
+  "miles": 4.2,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 111,
+  "lat": 41.40776,
+  "lon": -71.67956
+ },
+ {
+  "id": "south-farm-charlestown",
+  "name": "South Farm Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "fields",
+  "blurb": "Loops around two old farm fields, with a restored sheep barn.",
+  "miles": 2.4,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 110,
+  "lat": 41.41972,
+  "lon": -71.6156
+ },
+ {
+  "id": "tucker-woods",
+  "name": "Tucker Woods Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Family-friendly woods next to the Carter Preserve.",
+  "miles": 1.3,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 139,
+  "lat": 41.45058,
+  "lon": -71.67131
+ },
+ {
+  "id": "beaudoin",
+  "name": "Beaudoin Conservation Area",
+  "town": "Coventry",
+  "region": "West Bay",
+  "type": "woods",
+  "blurb": "400 acres of woods with cellar holes, stone walls and an old mill dam on Quidneck Brook.",
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 133,
+  "lat": 41.69891,
+  "lon": -71.65586
+ },
+ {
+  "id": "knight-farm",
+  "name": "Knight Farm",
+  "town": "Cranston",
+  "region": "Providence",
+  "type": "woods",
+  "blurb": "Pleasant woods-and-field loop in western Cranston.",
+  "miles": 1.2,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 125,
+  "lat": 41.75459,
+  "lon": -71.52983
+ },
+ {
+  "id": "ballou-farm",
+  "name": "Blackall & Ballou Farm Preserve",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Newer Cumberland Land Trust preserve with growing trail network.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 77,
+  "lat": 41.98821,
+  "lon": -71.46104
+ },
+ {
+  "id": "atlantic-white-cedar",
+  "name": "Gold Star / Atlantic White Cedar Swamp",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Bog bridges through a rare cedar swamp.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 96,
+  "lat": 41.97757,
+  "lon": -71.43595
+ },
+ {
+  "id": "high-rock-cumberland",
+  "name": "High Rock / Scott Brook",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Ridges with views, open woods and a bluebird meadow.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 60,
+  "lat": 41.95412,
+  "lon": -71.42824
+ },
+ {
+  "id": "mercy-woods",
+  "name": "Mercy Woods",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "211 acres of gently rolling woods with an easy yellow loop.",
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 95,
+  "lat": 42.00968,
+  "lon": -71.40897
+ },
+ {
+  "id": "monastery",
+  "name": "The Monastery (Cumberland)",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Miles of trails behind the old Trappist abbey, now the town library.",
+  "miles": 7.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "eri": 63,
+  "lat": 41.935,
+  "lon": -71.40583
+ },
+ {
+  "id": "otis-smith-farm",
+  "name": "Otis Smith Farm & Rowbottom Preserve",
+  "town": "Cumberland",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Old cart paths, stone walls and a tall exposed ledge.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 59,
+  "lat": 41.96157,
+  "lon": -71.42797
+ },
+ {
+  "id": "briggs-boesch",
+  "name": "Briggs-Boesch Farm",
+  "town": "East Greenwich",
+  "region": "West Bay",
+  "type": "fields",
+  "blurb": "Historic 1700s farm fields and woods in East Greenwich.",
+  "miles": 1.9,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 73,
+  "lat": 41.60812,
+  "lon": -71.5066
+ },
+ {
+  "id": "frenchtown-park",
+  "name": "Frenchtown Park & Laurel Wood",
+  "town": "East Greenwich",
+  "region": "West Bay",
+  "type": "woods",
+  "blurb": "125 acres of connected woodland trails.",
+  "miles": 2.5,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 74,
+  "lat": 41.62684,
+  "lon": -71.50633
+ },
+ {
+  "id": "boyden-heights",
+  "name": "Boyden Heights",
+  "town": "East Providence",
+  "region": "Providence",
+  "type": "coast",
+  "blurb": "Bluff loop with views over the Providence River.",
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 70,
+  "lat": 41.78953,
+  "lon": -71.3697
+ },
+ {
+  "id": "turner-reservoir",
+  "name": "Turner Reservoir",
+  "town": "East Providence",
+  "region": "Providence",
+  "type": "woods",
+  "blurb": "Easy shoreline walk along the reservoir and the Ten Mile River.",
+  "miles": 2.7,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 68,
+  "lat": 41.8302,
+  "lon": -71.34431
+ },
+ {
+  "id": "borders-farm",
+  "name": "Borders Farm",
+  "town": "Foster",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Very quiet farm and woods trails that meet the North-South Trail.",
+  "miles": 2.5,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 138,
+  "lat": 41.78523,
+  "lon": -71.75025
+ },
+ {
+  "id": "hayfield-foster",
+  "name": "Hayfield Property",
+  "town": "Foster",
+  "region": "North",
+  "type": "fields",
+  "blurb": "Rolling hayfields and stone walls on an old Foster farm.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 62,
+  "lat": 41.84028,
+  "lon": -71.72972
+ },
+ {
+  "id": "spencer-ponagansett",
+  "name": "Spencer Property (Ponagansett River)",
+  "town": "Foster",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Trail down to the Ponagansett River.",
+  "miles": 1.3,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 93,
+  "lat": 41.81972,
+  "lon": -71.71422
+ },
+ {
+  "id": "spencer-west",
+  "name": "Spencer West Property",
+  "town": "Foster",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Short loop around a pond or a longer one through mountain laurel.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 87,
+  "lat": 41.81816,
+  "lon": -71.75222
+ },
+ {
+  "id": "sprague-farm-glocester",
+  "name": "Sprague Farm",
+  "town": "Glocester",
+  "region": "North",
+  "type": "woods",
+  "blurb": "1,200 acres of forest with old farm roads and ledge vistas.",
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "orange"
+  ],
+  "eri": 17,
+  "lat": 41.90883,
+  "lon": -71.7025
+ },
+ {
+  "id": "steere-hill",
+  "name": "Steere Hill Farm",
+  "town": "Glocester",
+  "region": "North",
+  "type": "fields",
+  "blurb": "7+ miles of trails over fields and woods.",
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 18,
+  "lat": 41.894,
+  "lon": -71.61083
+ },
+ {
+  "id": "grills-hopkinton",
+  "name": "Grills Wildlife Sanctuary",
+  "town": "Hopkinton",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Flat old cart paths between Tomaquag Brook and the Pawcatuck River, with a stone bridge.",
+  "miles": 4.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 26,
+  "lat": 41.41078,
+  "lon": -71.7635
+ },
+ {
+  "id": "godena-farm",
+  "name": "Godena Farm",
+  "town": "Jamestown",
+  "region": "Newport & East Bay",
+  "type": "fields",
+  "blurb": "Mowed paths through pasture and pollinator meadow with big Jamestown views.",
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 126,
+  "lat": 41.54314,
+  "lon": -71.37495
+ },
+ {
+  "id": "handy-pond",
+  "name": "Handy Pond",
+  "town": "Lincoln",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Hidden trail network around Rochambeau Pond between Manville and Albion.",
+  "miles": 4.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 82,
+  "lat": 41.95407,
+  "lon": -71.46907
+ },
+ {
+  "id": "simmons-mill-pond",
+  "name": "Simmons Mill Pond",
+  "town": "Little Compton",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Grassy old cart tracks in two big loops, with signs giving walking times.",
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [
+   "orange"
+  ],
+  "eri": 135,
+  "lat": 41.53986,
+  "lon": -71.15467
+ },
+ {
+  "id": "middletown-valley",
+  "name": "Middletown Valley",
+  "town": "Middletown",
+  "region": "Newport & East Bay",
+  "type": "fields",
+  "blurb": "Middletown's newest park: open fields and easy paths on an old nursery.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 84,
+  "lat": 41.51567,
+  "lon": -71.29751
+ },
+ {
+  "id": "sakonnet-greenway",
+  "name": "Sakonnet Greenway Trail",
+  "town": "Portsmouth",
+  "region": "Newport & East Bay",
+  "type": "fields",
+  "blurb": "Aquidneck Island's longest nature trail: ~10 mi of flat woods and fields.",
+  "miles": 10.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "eri": 20,
+  "tips": "Free parking at Linden Ln, Bramans Ln, Wyatt Rd or Newport Vineyards. Shared with horses. Muddy after rain.",
+  "lat": 41.55487,
+  "lon": -71.25104
+ },
+ {
+  "id": "spruce-acres",
+  "name": "Spruce Acres Farm",
+  "town": "Middletown",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Loops through an old Christmas-tree farm.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 94,
+  "lat": 41.53866,
+  "lon": -71.26642
+ },
+ {
+  "id": "gansett-loop",
+  "name": "Gansett Loop Trail",
+  "town": "Narragansett",
+  "region": "South County",
+  "type": "path",
+  "blurb": "5.7 mi loop linking Canonchet Farm, Crooked Brook, the Narragansett seawall and quiet streets.",
+  "miles": 5.7,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 141,
+  "lat": 41.42787,
+  "lon": -71.46978
+ },
+ {
+  "id": "canonchet-farm",
+  "name": "Canonchet Farm",
+  "town": "Narragansett",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Wide trail and boardwalks through woods and wetland by the Narragansett town beach.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 46,
+  "lat": 41.4369,
+  "lon": -71.4574
+ },
+ {
+  "id": "sunset-farm",
+  "name": "Sunset Farm",
+  "town": "Narragansett",
+  "region": "South County",
+  "type": "fields",
+  "blurb": "Lasso-shaped loop through old farmland.",
+  "miles": 1.5,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 98,
+  "lat": 41.40694,
+  "lon": -71.48007
+ },
+ {
+  "id": "ballard-park",
+  "name": "Ballard Park",
+  "town": "Newport",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Old quarry with ridge-top trails, boardwalks and a meadow, right in Newport.",
+  "miles": 1.3,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 120,
+  "lat": 41.46687,
+  "lon": -71.32231
+ },
+ {
+  "id": "miantonomi",
+  "name": "Miantonomi Park",
+  "town": "Newport",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Wooded hill topped by a WWI memorial tower: the highest point in Newport.",
+  "miles": 1.5,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 122,
+  "lat": 41.50886,
+  "lon": -71.30794
+ },
+ {
+  "id": "melville-park",
+  "name": "Melville Park",
+  "town": "Portsmouth",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Five trails around the Melville Ponds, close to the bay.",
+  "miles": 5.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 78,
+  "lat": 41.58838,
+  "lon": -71.27478
+ },
+ {
+  "id": "bradner",
+  "name": "Bradner Preserve",
+  "town": "Richmond",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Hanging Rock Trail, wide and dog-friendly with gentle hills.",
+  "miles": 1.3,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 10,
+  "lat": 41.54161,
+  "lon": -71.6165
+ },
+ {
+  "id": "crawley",
+  "name": "Crawley Preserve",
+  "town": "Richmond",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Wide main trail plus a brookside footpath.",
+  "miles": 2.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 11,
+  "lat": 41.50917,
+  "lon": -71.60833
+ },
+ {
+  "id": "esek-hopkins",
+  "name": "Esek Hopkins Recreation Area",
+  "town": "Scituate",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Two fern-filled forest loops behind the ball field.",
+  "miles": 1.2,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 134,
+  "lat": 41.82917,
+  "lon": -71.60444
+ },
+ {
+  "id": "lawton-farm",
+  "name": "Lawton Farm Conservation Area",
+  "town": "Scituate",
+  "region": "North",
+  "type": "fields",
+  "blurb": "Easy farm walk on the Scituate/Cranston line.",
+  "miles": 1.3,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "noDogsNesting"
+  ],
+  "eri": 118,
+  "tips": "Dogs NOT allowed Apr 1 \u2013 Aug 31 (bird nesting).",
+  "lat": 41.75642,
+  "lon": -71.55328
+ },
+ {
+  "id": "westconnaug",
+  "name": "Westconnaug Meadows",
+  "town": "Scituate",
+  "region": "North",
+  "type": "fields",
+  "blurb": "Called one of the most peaceful, quiet short hikes in RI.",
+  "miles": 1.3,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 119,
+  "lat": 41.76667,
+  "lon": -71.67167
+ },
+ {
+  "id": "mowry-farm",
+  "name": "Mowry Farm",
+  "town": "Smithfield",
+  "region": "North",
+  "type": "fields",
+  "blurb": "Pine forest, working farm and views of Stillwater Reservoir.",
+  "miles": 1.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 61,
+  "lat": 41.92025,
+  "lon": -71.552
+ },
+ {
+  "id": "wolf-hill",
+  "name": "Wolf Hill Forest Preserve (WWII Memorial Loop)",
+  "town": "Smithfield",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Rocky ridge with a WWII bomber-crash memorial, an old scout camp and a quarry waterfall.",
+  "miles": 6.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "eri": 54,
+  "tips": "Park on the road by the trailhead. The southern Mary Mowry Trail is very steep.",
+  "lat": 41.89833,
+  "lon": -71.54028
+ },
+ {
+  "id": "alewife-brook",
+  "name": "Alewife Brook Preserve",
+  "town": "South Kingstown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Easy one-mile forest walk.",
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 131,
+  "lat": 41.42854,
+  "lon": -71.56364
+ },
+ {
+  "id": "browning-woods",
+  "name": "Browning Woods",
+  "town": "South Kingstown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Well-marked 3 mi trail through old farm woods.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 13,
+  "lat": 41.41313,
+  "lon": -71.60603
+ },
+ {
+  "id": "duval-trail",
+  "name": "DuVal Trail",
+  "town": "South Kingstown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "South Kingstown Land Trust's signature trail across a string of preserves.",
+  "miles": 3.5,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "eri": 12,
+  "lat": 41.40037,
+  "lon": -71.58533
+ },
+ {
+  "id": "weeden-farm",
+  "name": "Weeden Farm",
+  "town": "South Kingstown",
+  "region": "South County",
+  "type": "fields",
+  "blurb": "Pastoral 1.2 mi loop past hay and corn fields and a larch grove.",
+  "miles": 1.2,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "orange"
+  ],
+  "eri": 15,
+  "lat": 41.39609,
+  "lon": -71.54996
+ },
+ {
+  "id": "basket-swamp",
+  "name": "Basket Swamp Preserve",
+  "town": "Tiverton",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Level trails through rare oak-holly forest and stone walls.",
+  "miles": 2.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 57,
+  "lat": 41.62083,
+  "lon": -71.155
+ },
+ {
+  "id": "pardon-gray",
+  "name": "Pardon Gray Preserve",
+  "town": "Tiverton",
+  "region": "Newport & East Bay",
+  "type": "woods",
+  "blurb": "Links up with Weetamoo Woods for a longer outing.",
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 21,
+  "lat": 41.59104,
+  "lon": -71.19445
+ },
+ {
+  "id": "haile-farm",
+  "name": "Haile Farm Preserve",
+  "town": "Warren",
+  "region": "Newport & East Bay",
+  "type": "coast",
+  "blurb": "Woods trails with spurs onto the Palmer River salt marsh. Look for bald eagles.",
+  "miles": 1.5,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 97,
+  "lat": 41.75085,
+  "lon": -71.27458
+ },
+ {
+  "id": "fry-pond",
+  "name": "Fry Pond Preserve",
+  "town": "West Greenwich",
+  "region": "West Bay",
+  "type": "woods",
+  "blurb": "Loop with views over the Fry Pond wetland, behind West Greenwich Town Hall.",
+  "miles": 2.1,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 22,
+  "lat": 41.64028,
+  "lon": -71.68757
+ },
+ {
+  "id": "tillinghast-pond",
+  "name": "Tillinghast Pond",
+  "town": "West Greenwich",
+  "region": "West Bay",
+  "type": "woods",
+  "blurb": "2,700 acres around a clear, quiet pond; some of the best solitude in southern New England.",
+  "miles": 10.0,
+  "difficulty": "moderate",
+  "fav": true,
+  "water": true,
+  "flags": [
+   "orange"
+  ],
+  "eri": 23,
+  "tips": "Main lot on Plain Rd. 6.5 mi of loops, with 10 mi linked to Wickaboxet.",
+  "lat": 41.64513,
+  "lon": -71.75667
+ },
+ {
+  "id": "avondale-farm",
+  "name": "Avondale Farm Preserve",
+  "town": "Westerly",
+  "region": "South County",
+  "type": "fields",
+  "blurb": "Very easy walk through wildflower meadows near the Pawcatuck salt marsh.",
+  "miles": 1.6,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 3,
+  "lat": 41.332,
+  "lon": -71.83483
+ },
+ {
+  "id": "bradford-preserve",
+  "name": "Bradford Preserve",
+  "town": "Westerly",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Trailhead hides behind the lacrosse fields off Route 91.",
+  "miles": 2.2,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": false,
+  "flags": [],
+  "eri": 86,
+  "lat": 41.39129,
+  "lon": -71.75446
+ },
+ {
+  "id": "grills-westerly",
+  "name": "Grills Preserve (Westerly)",
+  "town": "Westerly",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Wide flat paths along a mile of the Pawcatuck River.",
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [
+   "orange"
+  ],
+  "eri": 5,
+  "lat": 41.39992,
+  "lon": -71.75917
+ },
+ {
+  "id": "riverwood",
+  "name": "Riverwood",
+  "town": "Westerly",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "Perimeter loop along the Pawcatuck with rhododendron and laurel.",
+  "miles": 2.0,
+  "difficulty": "moderate",
+  "fav": false,
+  "water": true,
+  "flags": [],
+  "eri": 7,
+  "lat": 41.39492,
+  "lon": -71.802
+ },
+ {
+  "id": "fort-adams",
+  "name": "Fort Adams Bay Walk",
+  "town": "Newport",
+  "region": "Newport & East Bay",
+  "type": "coast",
+  "blurb": "Paved 2.2 mi loop around the fort with big Narragansett Bay views.",
+  "miles": 2.2,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "tips": "Free parking; restrooms on site.",
+  "lat": 41.47577,
+  "lon": -71.33876
+ },
+ {
+  "id": "carter-preserve",
+  "name": "Carter Preserve",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "woods",
+  "blurb": "The Nature Conservancy's biggest RI preserve: sandplain grasslands, pine barrens and Pawcatuck River woods.",
+  "miles": 3.0,
+  "difficulty": "easy",
+  "fav": true,
+  "water": false,
+  "flags": [],
+  "tips": "Dogs must stay leashed (TNC rule).",
+  "lat": 41.4486,
+  "lon": -71.6866
+ },
+ {
+  "id": "hodge-preserve",
+  "name": "Hodge Preserve (Block Island)",
+  "town": "New Shoreham",
+  "region": "Block Island",
+  "type": "coast",
+  "blurb": "Easy 1 mi walk with pond, lighthouse and ocean views at the north end of the island.",
+  "miles": 1.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "island"
+  ],
+  "lat": 41.219,
+  "lon": -71.57
+ },
+ {
+  "id": "spencer-rock",
+  "name": "Spencer Rock",
+  "town": "Coventry",
+  "region": "West Bay",
+  "type": "woods",
+  "blurb": "Moosup River waterfall and an old railroad trestle off the Trestle Trail.",
+  "miles": 2.0,
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [
+   "orange"
+  ],
+  "lat": 41.67577,
+  "lon": -71.77753
+ },
+ {
+  "id": "buck-hill",
+  "name": "Buck Hill Management Area",
+  "town": "Burrillville",
+  "region": "North",
+  "type": "woods",
+  "blurb": "Remote ridges, stone walls and the Lesson Brook marsh in the far northwest corner.",
+  "miles": 3.6,
+  "difficulty": "easy",
+  "fav": false,
+  "water": false,
+  "flags": [
+   "orange"
+  ],
+  "lat": 41.9914,
+  "lon": -71.78179
+ },
+ {
+  "id": "goosewing",
+  "name": "Goosewing Beach Preserve (off-season)",
+  "town": "Little Compton",
+  "region": "Newport & East Bay",
+  "type": "beach",
+  "blurb": "Wild barrier beach and dunes beside Quicksand Pond. Dogs are only allowed outside nesting season.",
+  "difficulty": "easy",
+  "fav": false,
+  "water": true,
+  "flags": [
+   "offSeasonOnly"
+  ],
+  "lat": 41.4982,
+  "lon": -71.1225
+ },
+ {
+  "id": "sachuest",
+  "name": "Sachuest Point NWR",
+  "town": "Middletown",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Spectacular 3 mi of rocky coastal trails and overlooks; harlequin ducks and seals in winter.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Protects nesting and migrating shorebirds and wildlife that read dogs as predators.",
+   "enforcement": "Federal land (US Fish & Wildlife Service). Pets are banned under 50 CFR 26.21; refuge law-enforcement officers can issue a federal citation (the fine is set by the court's schedule) and loose animals can be impounded. The refuge manager says off-leash dogs are his #1 visitor complaint."
+  },
+  "flags": [],
+  "eri": 65,
+  "miles": 3.0,
+  "difficulty": "easy",
+  "lat": 41.47965,
+  "lon": -71.244
+ },
+ {
+  "id": "trustom",
+  "name": "Trustom Pond NWR",
+  "town": "South Kingstown",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Easy trails through fields and woods to overlooks on a coastal salt pond full of swans and ducks.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Protects nesting and migrating shorebirds and wildlife that read dogs as predators.",
+   "enforcement": "Federal land (US Fish & Wildlife Service). Pets are banned under 50 CFR 26.21; refuge law-enforcement officers can issue a federal citation (the fine is set by the court's schedule) and loose animals can be impounded. The refuge manager says off-leash dogs are his #1 visitor complaint."
+  },
+  "flags": [],
+  "eri": 64,
+  "miles": 2.5,
+  "difficulty": "easy",
+  "lat": 41.38325,
+  "lon": -71.58551
+ },
+ {
+  "id": "ninigret-salt-pond",
+  "name": "Ninigret NWR \u2013 Salt Pond Unit",
+  "town": "Charlestown",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Old airfield turned grasslands with trails to Grassy Point on Ninigret Pond.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Protects nesting and migrating shorebirds and wildlife that read dogs as predators.",
+   "enforcement": "Federal land (US Fish & Wildlife Service). Pets are banned under 50 CFR 26.21; refuge law-enforcement officers can issue a federal citation (the fine is set by the court's schedule) and loose animals can be impounded. The refuge manager says off-leash dogs are his #1 visitor complaint."
+  },
+  "flags": [],
+  "lat": 41.3656,
+  "lon": -71.67
+ },
+ {
+  "id": "norman-bird",
+  "name": "Norman Bird Sanctuary",
+  "town": "Middletown",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "7 mi of trails; Hanging Rock ridge has one of the best views on Aquidneck Island.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife sanctuary rules.",
+   "enforcement": "Private sanctuary with a staffed entrance and admission fee: dogs are turned away at the gate (service dogs only)."
+  },
+  "flags": [],
+  "lat": 41.4986,
+  "lon": -71.2486
+ },
+ {
+  "id": "powder-mill",
+  "name": "Powder Mill Ledges",
+  "town": "Smithfield",
+  "region": "North",
+  "type": "nature",
+  "blurb": "Audubon HQ trails through fields and woods.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 41,
+  "miles": 2.5,
+  "difficulty": "moderate",
+  "lat": 41.86853,
+  "lon": -71.53018
+ },
+ {
+  "id": "fisherville",
+  "name": "Fisherville Brook",
+  "town": "Exeter",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Cedar swamps, beech forest, ponds and a brook. One of Audubon's prettiest refuges.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 34,
+  "miles": 5.0,
+  "difficulty": "moderate",
+  "lat": 41.58991,
+  "lon": -71.57028
+ },
+ {
+  "id": "parker-woodland",
+  "name": "Parker Woodland",
+  "town": "Coventry",
+  "region": "West Bay",
+  "type": "nature",
+  "blurb": "Quiet forest with stone cairns, cellar holes and old quarry sites.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 40,
+  "miles": 5.0,
+  "difficulty": "moderate",
+  "lat": 41.71681,
+  "lon": -71.69795
+ },
+ {
+  "id": "maxwell-mays",
+  "name": "Maxwell Mays Refuge",
+  "town": "Coventry",
+  "region": "West Bay",
+  "type": "nature",
+  "blurb": "Fields, woods and Carr Pond on a painter's former farm.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 38,
+  "miles": 2.3,
+  "difficulty": "moderate",
+  "lat": 41.67063,
+  "lon": -71.69438
+ },
+ {
+  "id": "long-pond-woods",
+  "name": "Long Pond Woods",
+  "town": "Hopkinton",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Dramatic rock ledges and rhododendron tunnels above Long Pond. Rugged and gorgeous.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 37,
+  "miles": 2.0,
+  "difficulty": "hard",
+  "lat": 41.5088,
+  "lon": -71.78123
+ },
+ {
+  "id": "davis-memorial",
+  "name": "Davis Memorial Refuge",
+  "town": "North Kingstown",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Shady woodland trails along a stream.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 32,
+  "miles": 0.5,
+  "difficulty": "moderate",
+  "lat": 41.62328,
+  "lon": -71.48142
+ },
+ {
+  "id": "fort-refuge",
+  "name": "Fort Wildlife Refuge",
+  "town": "North Smithfield",
+  "region": "North",
+  "type": "nature",
+  "blurb": "Woods and wetlands loop in the north.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 33,
+  "miles": 3.0,
+  "difficulty": "moderate",
+  "lat": 41.96086,
+  "lon": -71.55281
+ },
+ {
+  "id": "mcintosh",
+  "name": "McIntosh Refuge (Audubon Nature Center)",
+  "town": "Bristol",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Boardwalk to Narragansett Bay through salt marsh, next to the Audubon aquarium.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 39,
+  "miles": 0.8,
+  "difficulty": "easy",
+  "lat": 41.7099,
+  "lon": -71.28276
+ },
+ {
+  "id": "touisset",
+  "name": "Touisset Marsh",
+  "town": "Warren",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Fields and woods down to a salt marsh; deer and foxes.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 43,
+  "miles": 1.5,
+  "difficulty": "moderate",
+  "lat": 41.70753,
+  "lon": -71.23628
+ },
+ {
+  "id": "ruecker",
+  "name": "Emilie Ruecker Refuge",
+  "town": "Tiverton",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Salt marsh and Sakonnet River shoreline trails.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 42,
+  "miles": 2.0,
+  "difficulty": "moderate",
+  "lat": 41.5917,
+  "lon": -71.19923
+ },
+ {
+  "id": "lathrop",
+  "name": "Lathrop Refuge",
+  "town": "Westerly",
+  "region": "South County",
+  "type": "nature",
+  "blurb": "Small woodland refuge in Westerly.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Wildlife treats dogs as predators. Dog scent lingers and pushes animals out of the habitat.",
+   "enforcement": "Audubon Society of RI refuge: dogs are prohibited at all 15 of its refuges, and it's posted at every trailhead. We found no published fines or tickets. It's enforced by staff and other visitors, and you'll be asked to leave."
+  },
+  "flags": [],
+  "eri": 36,
+  "miles": 0.5,
+  "difficulty": "moderate",
+  "lat": 41.33262,
+  "lon": -71.80552
+ },
+ {
+  "id": "whitehead",
+  "name": "Whitehead Preserve (Dundery Brook)",
+  "town": "Little Compton",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Accessible boardwalk through wetlands and forest.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Sensitive wetlands.",
+   "enforcement": "Nature Conservancy preserve: no dogs because of fragile wetlands and a narrow boardwalk."
+  },
+  "flags": [],
+  "eri": 24,
+  "miles": 1.9,
+  "difficulty": "easy",
+  "lat": 41.50857,
+  "lon": -71.17668
+ },
+ {
+  "id": "doug-rayner",
+  "name": "Doug Rayner Refuge at Nockum Hill",
+  "town": "Barrington",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Woods and salt-marsh edge above Hundred Acre Cove.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Owner's rules for wildlife/neighbours.",
+   "enforcement": "Conservation land where the owner bans dogs; posted at the trailhead."
+  },
+  "flags": [],
+  "eri": 128,
+  "miles": 2.0,
+  "difficulty": "easy",
+  "lat": 41.77167,
+  "lon": -71.31167
+ },
+ {
+  "id": "mount-hope-farm",
+  "name": "Mount Hope Farm",
+  "town": "Bristol",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Historic estate grounds and fields on Mount Hope Bay.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Owner's rules for wildlife/neighbours.",
+   "enforcement": "Conservation land where the owner bans dogs; posted at the trailhead."
+  },
+  "flags": [],
+  "eri": 45,
+  "miles": 2.5,
+  "difficulty": "easy",
+  "lat": 41.66768,
+  "lon": -71.25515
+ },
+ {
+  "id": "oakland-forest",
+  "name": "Oakland Forest & Meadow",
+  "town": "Portsmouth",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Aquidneck Land Trust's one no-dogs trail.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Owner's rules for wildlife/neighbours.",
+   "enforcement": "Conservation land where the owner bans dogs; posted at the trailhead."
+  },
+  "flags": [],
+  "eri": 19,
+  "miles": 0.6,
+  "difficulty": "easy",
+  "lat": 41.55684,
+  "lon": -71.26358
+ },
+ {
+  "id": "parker-farm-jamestown",
+  "name": "Parker Farm",
+  "town": "Jamestown",
+  "region": "Newport & East Bay",
+  "type": "nature",
+  "blurb": "Meadow and woods on Conanicut Island.",
+  "dogs": "no",
+  "noDogs": {
+   "why": "Owner's rules for wildlife/neighbours.",
+   "enforcement": "Conservation land where the owner bans dogs; posted at the trailhead."
+  },
+  "flags": [],
+  "eri": 124,
+  "miles": 1.2,
+  "difficulty": "easy",
+  "lat": 41.55865,
+  "lon": -71.36431
  }
 ];

@@ -3,8 +3,8 @@ window.AUGS_CONFIG = {
   groupName: "Aug's Dogs",
 
   // When the group meets each week. meetDay: 0 = Sunday, 1 = Monday ... 6 = Saturday.
-  meetDay: 6,
-  meetTime: "10:00", // 24-hour clock
+  meetDay: 0,
+  meetTime: "14:00", // 24-hour clock
 
   // Shared mode: paste your Supabase project's URL and "anon public" key here
   // (Supabase dashboard -> Project Settings -> API). Leave blank for demo mode,

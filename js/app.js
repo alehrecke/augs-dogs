@@ -369,6 +369,7 @@
         <button class="btn small ghost" data-action="map-focus" data-walk="${esc(w.id)}">On the map</button>
         <button class="btn small ghost" data-action="calendar">Add to calendar</button>
         <button class="btn small ghost" data-action="invite">Share invite</button>
+        <button class="btn small ghost" data-action="reroll">🎲 Re-roll</button>
       </div>
 
       <h3 class="section-title">Who's coming (${people.length})</h3>
@@ -381,10 +382,7 @@
 
       ${photosSectionHtml(ev)}
 
-      <div class="row" style="margin-top:14px; gap:14px">
-        ${S.editing ? "" : `<button class="linkish" data-action="edit">Edit time / meeting spot</button>`}
-        <button class="linkish" data-action="reroll">Re-roll the walk</button>
-      </div>
+      ${S.editing ? "" : `<p style="margin-top:14px"><button class="linkish" data-action="edit">Edit time / meeting spot</button></p>`}
     </article>`;
   }
 

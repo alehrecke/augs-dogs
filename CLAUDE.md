@@ -37,5 +37,5 @@ note → photo upload → lightbox → re-roll → past walks → spot search, a
   Pushed to `github.com/alehrecke/augs-dogs` (`main`); site URL once Pages is on:
   https://alehrecke.github.io/augs-dogs/ (live 2026-10-18).
 - 2026-10-19: "Add a spot" feature (search or tap map, CT/MA warning, remove own unwalked spot).
-  Tested in demo mode + graceful-degrade in shared mode. **Waiting on Alex to run
-  `supabase/002_spots.sql`**; until then the button shows "needs a database update".
+  Tested in demo mode; `002_spots.sql` run by Alex, live insert/delete + RI-bounds check
+  verified via REST, live site opens the form with no errors.
